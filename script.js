@@ -151,8 +151,8 @@ function collectStar (player, star)
     star.disableBody(true, true);
 
     //  Add and update the score
-    score += 10;
-    scoreText.setText('Score: ' + score);
+    score += 1;
+    scoreText.setText('Cheese: ' + score);
 
     if (stars.countActive(true) === 0)
     {
