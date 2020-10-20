@@ -162,7 +162,7 @@ function collectStar (player, star)
         y: star.y,
         quantity: 1,
         speed: 100,
-        lifespan: 200,
+        lifespan: 150,
         rotate: { random: true, start: 0, end: 180 },
         scale: { random: true, start: 0.75, end: 0.01 },
     });
