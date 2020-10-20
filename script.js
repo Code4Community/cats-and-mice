@@ -34,7 +34,7 @@ function preload ()
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    this.load.image('particle', 'assets/bomb.png');
+    this.load.image('particle', 'assets/cheese_crumb.png');
 }
 
 function create ()
@@ -158,15 +158,21 @@ function collectStar (player, star)
 
     var particle = this.add.particles('particle');
     var emitter = particle.createEmitter({
-        x: player.x,
-        y: player.y,
-        quantity: 5,
-        speed: 200,
+        x: star.x,
+        y: star.y,
+        quantity: 1,
+        speed: 100,
         lifespan: 200,
-        blendMode: 'ADD'
-
+        rotate: { random: true, start: 0, end: 180 },
+        scale: { random: true, start: 0.75, end: 0.01 },
     });
-
+    this.tweens.addCounter({
+        duration: 200,
+        onComplete: () => {
+            emitter.stop()
+            this.time.delayedCall(1000, () => {particle.removeEmitter(emitter)})
+        }
+    })
     if (stars.countActive(true) === 0)
     {
         //  A new batch of stars to collect
