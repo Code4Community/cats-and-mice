@@ -34,6 +34,7 @@ function preload ()
     this.load.image('star', 'assets/star.png');
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+    this.load.image('particle', 'assets/bomb.png');
 }
 
 function create ()
@@ -112,6 +113,7 @@ function create ()
     this.physics.add.overlap(player, stars, collectStar, null, this);
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
+
 }
 
 function update ()
@@ -153,6 +155,17 @@ function collectStar (player, star)
     //  Add and update the score
     score += 1;
     scoreText.setText('Cheese: ' + score);
+
+    var particle = this.add.particles('particle');
+    var emitter = particle.createEmitter({
+        x: player.x,
+        y: player.y,
+        quantity: 5,
+        speed: 200,
+        lifespan: 200,
+        blendMode: 'ADD'
+
+    });
 
     if (stars.countActive(true) === 0)
     {
