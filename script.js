@@ -35,13 +35,11 @@ function preload ()
     this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('mouse', 'assets/mouse.png', { frameWidth: 41.5, frameHeight: 24 });
 }
-
 function create ()
 {
     //  A simple background for our game
     this.add.image(400, 300, 'sky');
-
-    //  The platforms group contains the ground and the 2 ledges we can jump on
+    // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
 
     //  Here we create the ground.
@@ -52,8 +50,8 @@ function create ()
     platforms.create(600, 400, 'ground');
     platforms.create(50, 250, 'ground');
     platforms.create(750, 220, 'ground');
-
-    // The player and its settings
+   
+    //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse');
 
     //  Player physics properties. Give the little guy a slight bounce.
@@ -117,7 +115,8 @@ function create ()
 function update ()
 {
     if (gameOver)
-    {
+    {   
+        alert("GAME OVER");
         return;
     }
 
@@ -142,9 +141,44 @@ function update ()
 
     if (cursors.up.isDown && player.body.touching.down)
     {
-        player.setVelocityY(-330);
+        player.setVelocityY(-430);
     }
 }
+
+
+function update1 (){
+    while(!gameOver){
+        if (cursors.left.isDown)
+    {
+        player.setVelocityX(-160);
+
+        player.anims.play('left', true);
+    }
+    else if (cursors.right.isDown)
+    {
+        player.setVelocityX(160);
+
+        player.anims.play('right', true);
+    }
+    else
+    {
+        player.setVelocityX(0);
+
+        player.anims.play('turn');
+    }
+    
+    if (cursors.up.isDown && player.body.touching.down)
+        {
+           
+            player.setVelocityY(-330);
+        }
+    }
+    alert("GAME OVER");
+}
+
+
+
+
 
 function collectCheese (player, cheese)
 {
