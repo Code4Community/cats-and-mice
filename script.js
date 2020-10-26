@@ -119,8 +119,7 @@ function create ()
 function update ()
 {
     if (gameOver)
-    {   
-        alert("GAME OVER");
+    {
         return;
     }
 
@@ -147,40 +146,7 @@ function update ()
     {
         player.setVelocityY(-430);
     }
-
-    
 }
-
-
-// function update1 (){
-//     while(!gameOver){
-//     if (cursors.left.isDown)
-//     {
-//         player.setVelocityX(-160);
-
-//         player.anims.play('left', true);
-//     }
-//     else if (cursors.right.isDown)
-//     {
-//         player.setVelocityX(160);
-
-//         player.anims.play('right', true);
-//     }
-//     else
-//     {
-//         player.setVelocityX(0);
-
-//         player.anims.play('turn');
-//     }
-    
-//     if (cursors.up.isDown && player.body.touching.down)
-//         {
-           
-//             player.setVelocityY(-330);
-//         }
-//     }
-//     alert("GAME OVER");
-// }
 
 function collectCheese (player, cheese)
 {
