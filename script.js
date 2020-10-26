@@ -192,8 +192,8 @@ function collectCheese (player, cheese)
 
     var particle = this.add.particles('particle');
     var emitter = particle.createEmitter({
-        x: star.x,
-        y: star.y,
+        x: cheese.x,
+        y: cheese.y,
         quantity: 1,
         speed: 100,
         lifespan: 150,
