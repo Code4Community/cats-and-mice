@@ -1,11 +1,11 @@
 var config = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 720,
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 500 },
             debug: false
         }
     },
@@ -39,7 +39,7 @@ function preload ()
 function create ()
 {
     //  A simple background for our game
-    this.add.image(400, 300, 'sky');
+    this.add.image(640, 360, 'sky').setScale(1.75);
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
 
