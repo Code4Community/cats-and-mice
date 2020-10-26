@@ -104,9 +104,11 @@ function create ()
     //  Collide the player and the stars with the platforms
     this.physics.add.collider(player, platforms);
     this.physics.add.collider(cheeses, platforms);
-    this.physics.add.collider(bombs, platforms);
+    // this.physics.add.collider(bombs, platforms);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+    this.physics.add.collider(bombs, platforms, patrolPlatform, null, this);
+
     this.physics.add.overlap(player, cheeses, collectCheese, null, this);
 
     this.physics.add.collider(player, bombs, hitBomb, null, this);
@@ -143,42 +145,40 @@ function update ()
     {
         player.setVelocityY(-430);
     }
-}
 
-
-function update1 (){
-    while(!gameOver){
-        if (cursors.left.isDown)
-    {
-        player.setVelocityX(-160);
-
-        player.anims.play('left', true);
-    }
-    else if (cursors.right.isDown)
-    {
-        player.setVelocityX(160);
-
-        player.anims.play('right', true);
-    }
-    else
-    {
-        player.setVelocityX(0);
-
-        player.anims.play('turn');
-    }
     
-    if (cursors.up.isDown && player.body.touching.down)
-        {
-           
-            player.setVelocityY(-330);
-        }
-    }
-    alert("GAME OVER");
 }
 
 
+// function update1 (){
+//     while(!gameOver){
+//     if (cursors.left.isDown)
+//     {
+//         player.setVelocityX(-160);
 
+//         player.anims.play('left', true);
+//     }
+//     else if (cursors.right.isDown)
+//     {
+//         player.setVelocityX(160);
 
+//         player.anims.play('right', true);
+//     }
+//     else
+//     {
+//         player.setVelocityX(0);
+
+//         player.anims.play('turn');
+//     }
+    
+//     if (cursors.up.isDown && player.body.touching.down)
+//         {
+           
+//             player.setVelocityY(-330);
+//         }
+//     }
+//     alert("GAME OVER");
+// }
 
 function collectCheese (player, cheese)
 {
@@ -199,7 +199,7 @@ function collectCheese (player, cheese)
 
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-        var bomb = bombs.create(x, 16, 'bomb');
+        var bomb = bombs.create(400, 16, 'bomb');
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
         bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
@@ -217,4 +217,14 @@ function hitBomb (player, bomb)
     player.anims.play('turn');
 
     gameOver = true;
+}
+
+function patrolPlatform(bomb, platform)
+{
+    bomb.setVelocityY(0);
+
+    if (bomb.body.velocity.x < 0 && bomb.x < platform.x - (platform.width/2) || bomb.body.velocity.x > 0 && bomb.x > platform.x + (platform.width/2))
+    {
+        bomb.body.velocity.x *= -1;
+    }
 }
