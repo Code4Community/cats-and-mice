@@ -89,8 +89,8 @@ function create ()
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
+        repeat: 10,
+        setXY: { x: 40, y: 0, stepX: 120 }
     });
 
     cheeses.children.iterate(function (child) {
