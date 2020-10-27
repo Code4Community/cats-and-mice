@@ -18,7 +18,7 @@ var config = {
 
 var player;
 var cheeses;
-var bombs;
+var cats;
 var platforms;
 var cursors;
 var score = 0;
@@ -32,9 +32,9 @@ function preload ()
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('cheese', 'assets/cheese.png');
-    this.load.image('bomb', 'assets/bomb.png');
     this.load.spritesheet('mouse', 'assets/mouse.png', { frameWidth: 41.5, frameHeight: 24 });
     this.load.image('particle', 'assets/cheese_crumb.png');
+    this.load.spritesheet('cat','assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
 }
 function create ()
 {
@@ -53,7 +53,7 @@ function create ()
     platforms.create(750, 220, 'ground');
    
     //The player and its settings
-    player = this.physics.add.sprite(100, 450, 'mouse');
+    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
@@ -80,6 +80,26 @@ function create ()
         repeat: -1
     });
 
+    this.anims.create({
+        key: 'catLeft',
+        frames: this.anims.generateFrameNumbers('cat', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    this.anims.create({
+        key: 'catTurn',
+        frames: [ { key: 'cat', frame: 4 } ],
+        frameRate: 20
+    });
+
+    this.anims.create({
+        key: 'catRight',
+        frames: this.anims.generateFrameNumbers('cat', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
     //  Input Events
     cursors = this.input.keyboard.createCursorKeys();
 
@@ -96,8 +116,7 @@ function create ()
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
 
     });
-
-    bombs = this.physics.add.group();
+    cats = this.physics.add.group();
 
     //  The score
     scoreText = this.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
@@ -108,11 +127,13 @@ function create ()
     // this.physics.add.collider(bombs, platforms);
 
     //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.collider(bombs, platforms, patrolPlatform, null, this);
+    this.physics.add.collider(cats, platforms, patrolPlatform, null, this);
 
     this.physics.add.overlap(player, cheeses, collectCheese, null, this);
 
-    this.physics.add.collider(player, bombs, hitBomb, null, this);
+    this.physics.add.collider(player, cats, hitCat, null, this);
+
+
 
 }
 
@@ -125,13 +146,13 @@ function update ()
 
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-160);
+        player.setVelocityX(-180);
 
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(160);
+        player.setVelocityX(180);
 
         player.anims.play('right', true);
     }
@@ -146,6 +167,7 @@ function update ()
     {
         player.setVelocityY(-430);
     }
+
 }
 
 function collectCheese (player, cheese)
@@ -181,19 +203,21 @@ function collectCheese (player, cheese)
             child.enableBody(true, child.x, 0, true, true);
 
         });
-
         var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-        var bomb = bombs.create(400, 16, 'bomb');
-        bomb.setBounce(1);
-        bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-        bomb.allowGravity = false;
+        var cat = cats.create(400, 16, 'cat');
+        cat.setBounce(1);
+        cat.setCollideWorldBounds(true);
+        cat.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        cat.allowGravity = false;
+        cat.anims.play('catTurn');
+        cat.setSize(0, 31);
+
 
     }
 }
 
-function hitBomb (player, bomb)
+function hitCat (player, cat)
 {
     this.physics.pause();
 
@@ -204,12 +228,21 @@ function hitBomb (player, bomb)
     gameOver = true;
 }
 
-function patrolPlatform(bomb, platform)
-{
-    bomb.setVelocityY(0);
+function patrolPlatform(cat, platform)
+{   
+    
+    cat.setVelocityY(0);
 
-    if (bomb.body.velocity.x < 0 && bomb.x < platform.x - (platform.width/2) || bomb.body.velocity.x > 0 && bomb.x > platform.x + (platform.width/2))
+    if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width/2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width/2))
     {
-        bomb.body.velocity.x *= -1;
+        cat.body.velocity.x *= -1;
+    }
+
+    if (cat.body.velocity.x > 0) {
+        cat.anims.play('catRight', true);
+    } else if (cat.body.velocity.x < 0) {
+        cat.anims.play('catLeft', true);
+    } else {
+        cat.anims.play('catTurn');
     }
 }
