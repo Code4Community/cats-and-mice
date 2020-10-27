@@ -45,15 +45,18 @@ function create ()
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    platforms.create(1000, 450, 'ground');
+    platforms.create(50, 200, 'ground');
+    platforms.create(750, 620, 'ground');
+    platforms.create(175, 500, 'ground');
+    platforms.create(450, 350, 'ground');
+    platforms.create(1250, 300, 'ground');
    
     //The player and its settings
-    player = this.physics.add.sprite(100, 450, 'mouse');
+    player = this.physics.add.sprite(100, 650, 'mouse');
 
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
