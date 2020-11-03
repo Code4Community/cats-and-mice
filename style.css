@@ -1,0 +1,7 @@
+body {
+    margin: 0;
+}
+ 
+nav.navbar.navbar-dark.bg-dark.bg-scarlet {
+    background-color: #bb0000 !important;
+}
