@@ -185,12 +185,12 @@ function collectCheese (player, cheese)
 
         });
 
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-        var bomb = bombs.create(400, 16, 'bomb');
+        var x = (player.x < 640) ? Phaser.Math.Between(640, 1280) : Phaser.Math.Between(0, 640);
+        var bomb = bombs.create(x, 0, 'bomb');
         bomb.setBounce(1);
         bomb.setCollideWorldBounds(true);
-        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        bomb.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
         bomb.allowGravity = false;
 
     }
