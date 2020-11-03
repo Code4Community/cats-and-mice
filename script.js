@@ -212,7 +212,7 @@ function collectCheese (player, cheese)
         cat.setBounce(1);
         cat.setCollideWorldBounds(true);
         var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
-        bomb.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
+        cat.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
         cat.allowGravity = false;
         cat.anims.play('catTurn');
         cat.setSize(0, 31);
