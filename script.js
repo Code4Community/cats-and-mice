@@ -45,12 +45,15 @@ function create ()
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     //  Now let's create some ledges
-    platforms.create(600, 400, 'ground');
-    platforms.create(50, 250, 'ground');
-    platforms.create(750, 220, 'ground');
+    platforms.create(1000, 450, 'ground');
+    platforms.create(50, 200, 'ground');
+    platforms.create(750, 620, 'ground');
+    platforms.create(175, 500, 'ground');
+    platforms.create(450, 350, 'ground');
+    platforms.create(1250, 300, 'ground');
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
@@ -106,8 +109,8 @@ function create ()
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 11,
-        setXY: { x: 12, y: 0, stepX: 70 }
+        repeat: 10,
+        setXY: { x: 40, y: 0, stepX: 120 }
     });
 
     cheeses.children.iterate(function (child) {
@@ -203,16 +206,16 @@ function collectCheese (player, cheese)
             child.enableBody(true, child.x, 0, true, true);
 
         });
-        var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        var x = (player.x < 640) ? Phaser.Math.Between(640, 1280) : Phaser.Math.Between(0, 640);
 
         var cat = cats.create(400, 16, 'cat');
         cat.setBounce(1);
         cat.setCollideWorldBounds(true);
-        cat.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        bomb.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
         cat.allowGravity = false;
         cat.anims.play('catTurn');
         cat.setSize(0, 31);
-
 
     }
 }
