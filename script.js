@@ -119,7 +119,28 @@ function create ()
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
 
     });
-    cats = this.physics.add.group();
+
+    let xCoord = [0, 300, 800, 1000, 1280, 1250];
+    let yCoord = [160, 300, 550, 400, 250, 660];
+    cats = this.physics.add.group({
+        key: 'cat',
+        repeat: 5,
+        
+    });
+
+    var i = 0;
+    cats.children.iterate(function (child) {
+
+        child.setBounce(1);
+        child.setCollideWorldBounds(true);
+        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        child.setVelocity(Phaser.Math.Between(50, 100) * multiplier, 20);
+        child.allowGravity = false;
+        child.anims.play('catTurn');
+        child.setSize(0, 31);
+        child.setPosition(xCoord[i], yCoord[i]);
+        i++;
+    });
 
     //  The score
     scoreText = this.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
@@ -208,14 +229,14 @@ function collectCheese (player, cheese)
         });
         var x = (player.x < 640) ? Phaser.Math.Between(640, 1280) : Phaser.Math.Between(0, 640);
 
-        var cat = cats.create(400, 16, 'cat');
-        cat.setBounce(1);
-        cat.setCollideWorldBounds(true);
-        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
-        cat.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
-        cat.allowGravity = false;
-        cat.anims.play('catTurn');
-        cat.setSize(0, 31);
+        // var cat = cats.create(400, 16, 'cat');
+        // cat.setBounce(1);
+        // cat.setCollideWorldBounds(true);
+        // var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        // cat.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
+        // cat.allowGravity = false;
+        // cat.anims.play('catTurn');
+        // cat.setSize(0, 31);
 
     }
 }
