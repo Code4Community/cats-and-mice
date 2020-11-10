@@ -28,6 +28,16 @@ var scoreText;
 
 var game = new Phaser.Game(config);
 
+document.getElementById('level-select').addEventListener('change', (event) => {
+    game.destroy(true);
+    switch(event.target.value) {
+        case '1': game = new Phaser.Game(config); break;
+        case '2': game = new Phaser.Game(config); break;
+        case '3': game = new Phaser.Game(config); break;
+        case '4': game = new Phaser.Game(config); break;
+    }
+});
+
 function preload ()
 {
     this.load.image('sky', 'assets/sky.png');
