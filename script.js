@@ -12,7 +12,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: create,
+        create: createLevel1,
         update: update
     }
 };
@@ -31,10 +31,22 @@ var game = new Phaser.Game(config);
 document.getElementById('level-select').addEventListener('change', (event) => {
     game.destroy(true);
     switch(event.target.value) {
-        case '1': game = new Phaser.Game(config); break;
-        case '2': game = new Phaser.Game(config); break;
-        case '3': game = new Phaser.Game(config); break;
-        case '4': game = new Phaser.Game(config); break;
+        case '1':
+            config.scene.create = createLevel1;
+            game = new Phaser.Game(config);
+            break;
+        case '2':
+            config.scene.create = createLevel2;
+            game = new Phaser.Game(config);
+            break;
+        case '3':
+            config.scene.create = createLevel3;
+            game = new Phaser.Game(config);
+            break;
+        case '4':
+            config.scene.create = createLevel4;
+            game = new Phaser.Game(config);
+            break;
     }
 });
 
@@ -47,10 +59,81 @@ function preload ()
     this.load.image('particle', 'assets/cheese_crumb.png');
     this.load.spritesheet('cat','assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
 }
-function create ()
-{
+
+function createSky(realThis) {
     //  A simple background for our game
-    this.add.image(640, 360, 'sky').setScale(1.75);
+    realThis.add.image(640, 360, 'sky').setScale(1.75);
+}
+
+function createAnimations(realThis) {
+    //  Player physics properties. Give the little guy a slight bounce.
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
+
+    //  Our player animations, turning, walking left and walking right.
+    realThis.anims.create({
+        key: 'left',
+        frames: realThis.anims.generateFrameNumbers('mouse', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    realThis.anims.create({
+        key: 'turn',
+        frames: [ { key: 'mouse', frame: 4 } ],
+        frameRate: 20
+    });
+
+    realThis.anims.create({
+        key: 'right',
+        frames: realThis.anims.generateFrameNumbers('mouse', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    realThis.anims.create({
+        key: 'catLeft',
+        frames: realThis.anims.generateFrameNumbers('cat', { start: 0, end: 3 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    realThis.anims.create({
+        key: 'catTurn',
+        frames: [ { key: 'cat', frame: 4 } ],
+        frameRate: 20
+    });
+
+    realThis.anims.create({
+        key: 'catRight',
+        frames: realThis.anims.generateFrameNumbers('cat', { start: 5, end: 8 }),
+        frameRate: 10,
+        repeat: -1
+    });
+
+    //  Input Events
+    cursors = realThis.input.keyboard.createCursorKeys();
+}
+
+function createScoreAndCollisions(realThis) {
+    //  The score
+    scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
+
+    //  Collide the player and the stars with the platforms
+    realThis.physics.add.collider(player, platforms);
+    realThis.physics.add.collider(cheeses, platforms);
+
+    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
+    realThis.physics.add.collider(cats, platforms, patrolPlatform, null, realThis);
+
+    realThis.physics.add.overlap(player, cheeses, collectCheese, null, realThis);
+
+    realThis.physics.add.collider(player, cats, hitCat, null, realThis);
+}
+
+function createLevel1() {
+    createSky(this);
+
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
 
@@ -69,53 +152,7 @@ function create ()
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
 
-    //  Player physics properties. Give the little guy a slight bounce.
-    player.setBounce(0.2);
-    player.setCollideWorldBounds(true);
-
-    //  Our player animations, turning, walking left and walking right.
-    this.anims.create({
-        key: 'left',
-        frames: this.anims.generateFrameNumbers('mouse', { start: 0, end: 3 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'turn',
-        frames: [ { key: 'mouse', frame: 4 } ],
-        frameRate: 20
-    });
-
-    this.anims.create({
-        key: 'right',
-        frames: this.anims.generateFrameNumbers('mouse', { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'catLeft',
-        frames: this.anims.generateFrameNumbers('cat', { start: 0, end: 3 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    this.anims.create({
-        key: 'catTurn',
-        frames: [ { key: 'cat', frame: 4 } ],
-        frameRate: 20
-    });
-
-    this.anims.create({
-        key: 'catRight',
-        frames: this.anims.generateFrameNumbers('cat', { start: 5, end: 8 }),
-        frameRate: 10,
-        repeat: -1
-    });
-
-    //  Input Events
-    cursors = this.input.keyboard.createCursorKeys();
+    createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
@@ -123,7 +160,6 @@ function create ()
         repeat: 10,
         setXY: { x: 40, y: 0, stepX: 120 }
     });
-
     cheeses.children.iterate(function (child) {
 
         //  Give each star a slightly different bounce
@@ -138,7 +174,6 @@ function create ()
         repeat: 5,
         
     });
-
     var i = 0;
     cats.children.iterate(function (child) {
 
@@ -153,23 +188,169 @@ function create ()
         i++;
     });
 
-    //  The score
-    scoreText = this.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
+    createScoreAndCollisions(this);
+}
 
-    //  Collide the player and the stars with the platforms
-    this.physics.add.collider(player, platforms);
-    this.physics.add.collider(cheeses, platforms);
-    // this.physics.add.collider(bombs, platforms);
+function createLevel2() {
+    createSky(this);
 
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
-    this.physics.add.collider(cats, platforms, patrolPlatform, null, this);
+    // The platforms group contains the ground and the 2 ledges we can jump on
+    platforms = this.physics.add.staticGroup();
 
-    this.physics.add.overlap(player, cheeses, collectCheese, null, this);
+    //  Here we create the ground.
+    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
-    this.physics.add.collider(player, cats, hitCat, null, this);
+    // TODO - PUT PLATFORMS HERE
+   
+    //The player and its settings
+    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
 
+    createAnimations(this);
 
+    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    cheeses = this.physics.add.group({
+        key: 'cheese',
+        repeat: 10,
+        setXY: { x: 40, y: 0, stepX: 120 }
+    });
+    cheeses.children.iterate(function (child) {
 
+        //  Give each star a slightly different bounce
+        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+    });
+
+    let xCoord = [0, 300, 800, 1000, 1280, 1250];
+    let yCoord = [160, 300, 550, 400, 250, 660];
+    cats = this.physics.add.group({
+        key: 'cat',
+        repeat: 5,
+        
+    });
+    var i = 0;
+    cats.children.iterate(function (child) {
+
+        child.setBounce(1);
+        child.setCollideWorldBounds(true);
+        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        child.setVelocity(Phaser.Math.Between(50, 100) * multiplier, 20);
+        child.allowGravity = false;
+        child.anims.play('catTurn');
+        child.setSize(0, 31);
+        child.setPosition(xCoord[i], yCoord[i]);
+        i++;
+    });
+
+    createScoreAndCollisions(this);
+}
+
+function createLevel3() {
+    createSky(this);
+
+    // The platforms group contains the ground and the 2 ledges we can jump on
+    platforms = this.physics.add.staticGroup();
+
+    //  Here we create the ground.
+    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
+
+    // TODO - PUT PLATFORMS HERE
+   
+    //The player and its settings
+    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+
+    createAnimations(this);
+
+    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    cheeses = this.physics.add.group({
+        key: 'cheese',
+        repeat: 10,
+        setXY: { x: 40, y: 0, stepX: 120 }
+    });
+    cheeses.children.iterate(function (child) {
+
+        //  Give each star a slightly different bounce
+        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+    });
+
+    let xCoord = [0, 300, 800, 1000, 1280, 1250];
+    let yCoord = [160, 300, 550, 400, 250, 660];
+    cats = this.physics.add.group({
+        key: 'cat',
+        repeat: 5,
+        
+    });
+    var i = 0;
+    cats.children.iterate(function (child) {
+
+        child.setBounce(1);
+        child.setCollideWorldBounds(true);
+        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        child.setVelocity(Phaser.Math.Between(50, 100) * multiplier, 20);
+        child.allowGravity = false;
+        child.anims.play('catTurn');
+        child.setSize(0, 31);
+        child.setPosition(xCoord[i], yCoord[i]);
+        i++;
+    });
+
+    createScoreAndCollisions(this);
+}
+
+function createLevel4() {
+    createSky(this);
+
+    // The platforms group contains the ground and the 2 ledges we can jump on
+    platforms = this.physics.add.staticGroup();
+
+    //  Here we create the ground.
+    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
+
+    // TODO - PUT PLATFORMS HERE
+   
+    //The player and its settings
+    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+
+    createAnimations(this);
+
+    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    cheeses = this.physics.add.group({
+        key: 'cheese',
+        repeat: 10,
+        setXY: { x: 40, y: 0, stepX: 120 }
+    });
+    cheeses.children.iterate(function (child) {
+
+        //  Give each star a slightly different bounce
+        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+    });
+
+    let xCoord = [0, 300, 800, 1000, 1280, 1250];
+    let yCoord = [160, 300, 550, 400, 250, 660];
+    cats = this.physics.add.group({
+        key: 'cat',
+        repeat: 5,
+        
+    });
+    var i = 0;
+    cats.children.iterate(function (child) {
+
+        child.setBounce(1);
+        child.setCollideWorldBounds(true);
+        var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
+        child.setVelocity(Phaser.Math.Between(50, 100) * multiplier, 20);
+        child.allowGravity = false;
+        child.anims.play('catTurn');
+        child.setSize(0, 31);
+        child.setPosition(xCoord[i], yCoord[i]);
+        i++;
+    });
+
+    createScoreAndCollisions(this);
 }
 
 function update ()
