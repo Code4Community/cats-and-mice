@@ -1,5 +1,5 @@
 var config = {
-    type: Phaser.CANVAS,
+    type: Phaser.AUTO,
     parent: 'game',
     width: 1280,
     height: 720,
