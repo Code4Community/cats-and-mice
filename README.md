@@ -9,6 +9,7 @@ This is a 2D platformer game made using [Phaser](https://phaser.io/).
     1. Open a terminal
     1. Navigate to the root directory of the repository
     1. Run the following command: `python -m http.server`
+        * Depending upon your operating system and your environment, you may need to replace `python` with `python3`
 1. Open [your local site](http://localhost:8000/) in your browser
 
 ## Target Audience
