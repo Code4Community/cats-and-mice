@@ -12,7 +12,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: createLevel1,
+        create: createLevel4, //Temp
         update: update
     }
 };
@@ -203,7 +203,7 @@ function createLevel1() {
     createScoreAndCollisions(this);
 }
 
-function createLevel2() {
+function createLevel2() { 
     createSky(this);
 
     // The platforms group contains the ground and the 2 ledges we can jump on
@@ -213,10 +213,14 @@ function createLevel2() {
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
-    // TODO - PUT PLATFORMS HERE
+    // All blocks
+    platforms.create(600, 600, 'ground').setScale(.5, 7).refreshBody(); //middle block
+    platforms.create(950, 350, 'ground').setScale(.60, 1).refreshBody(); //Sky platform
+    platforms.create(125, 700, 'ground').setScale(.05, 5).refreshBody(); //Left wall
+    platforms.create(1200, 650, 'ground').setScale(.5, 6).refreshBody(); //Right block
    
-    //The player and its settings
-    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    //The player and its settings //can move to fulfill level design 
+    player = this.physics.add.sprite(50, 620, 'mouse').setSize(20, 18);
 
     createAnimations(this);
 
@@ -257,7 +261,7 @@ function createLevel2() {
     createScoreAndCollisions(this);
 }
 
-function createLevel3() {
+function createLevel3() { 
     createSky(this);
 
     // The platforms group contains the ground and the 2 ledges we can jump on
@@ -268,9 +272,14 @@ function createLevel3() {
     platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     // TODO - PUT PLATFORMS HERE
+    platforms.create(200, 700, 'ground').setScale(.3, 5).refreshBody(); //Left wall
+    platforms.create(800, 700, 'ground').setScale(.3, 5).refreshBody(); //Right wall
+    platforms.create(400, 300, 'ground').setScale(.4, 3).refreshBody(); //sky block
+    platforms.create(330, 150, 'ground').setScale(.05, 11).refreshBody(); //sky block hang thing
+    platforms.create(900, 200, 'ground').setScale(.4, 3).refreshBody(); //sky block
    
     //The player and its settings
-    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    player = this.physics.add.sprite(50, 600, 'mouse').setSize(20, 18);
 
     createAnimations(this);
 
@@ -311,7 +320,7 @@ function createLevel3() {
     createScoreAndCollisions(this);
 }
 
-function createLevel4() {
+function createLevel4() { /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     createSky(this);
 
     // The platforms group contains the ground and the 2 ledges we can jump on
@@ -322,6 +331,7 @@ function createLevel4() {
     platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     // TODO - PUT PLATFORMS HERE
+    platforms.create(125, 300, 'ground').setScale(.05, 25).refreshBody(); //Left wall
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
