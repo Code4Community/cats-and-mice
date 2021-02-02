@@ -28,9 +28,21 @@ var scoreText;
 
 var game = new Phaser.Game(config);
 
+// Level selection dropdown
 document.getElementById('level-select').addEventListener('change', (event) => {
+    switchLevel(event.target.value);
+});
+
+// Respawn button
+document.getElementById('respawn').addEventListener('click', (event) => {
+    gameOver = false;
+    let currentLevel = document.getElementById('level-select').value;
+    switchLevel(currentLevel);
+});
+
+function switchLevel(level) {
     game.destroy(true);
-    switch(event.target.value) {
+    switch(level) {
         case '1':
             config.scene.create = createLevel1;
             game = new Phaser.Game(config);
@@ -48,7 +60,7 @@ document.getElementById('level-select').addEventListener('change', (event) => {
             game = new Phaser.Game(config);
             break;
     }
-});
+}
 
 function preload ()
 {
