@@ -77,6 +77,10 @@ function createSky(realThis) {
     realThis.add.image(640, 360, 'sky').setScale(1.75);
 }
 
+function initializePlayerAttributes(player) {
+    player.velocity = 180;
+}
+
 function createAnimations(realThis) {
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
@@ -163,6 +167,7 @@ function createLevel1() {
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
 
     createAnimations(this);
 
@@ -217,6 +222,7 @@ function createLevel2() {
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
 
     createAnimations(this);
 
@@ -271,6 +277,7 @@ function createLevel3() {
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
 
     createAnimations(this);
 
@@ -325,6 +332,7 @@ function createLevel4() {
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
 
     createAnimations(this);
 
@@ -374,13 +382,13 @@ function update ()
 
     if (cursors.left.isDown)
     {
-        player.setVelocityX(-180);
+        player.setVelocityX(-1 * player.velocity);
 
         player.anims.play('left', true);
     }
     else if (cursors.right.isDown)
     {
-        player.setVelocityX(180);
+        player.setVelocityX(1 * player.velocity);
 
         player.anims.play('right', true);
     }
