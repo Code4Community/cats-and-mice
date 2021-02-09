@@ -271,7 +271,6 @@ function createLevel3() {
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
-    // TODO - PUT PLATFORMS HERE
     platforms.create(200, 700, 'ground').setScale(.3, 5).refreshBody(); //Left wall
     platforms.create(800, 700, 'ground').setScale(.3, 5).refreshBody(); //Right wall
     platforms.create(400, 300, 'ground').setScale(.4, 3).refreshBody(); //sky block
@@ -330,8 +329,21 @@ function createLevel4() { //////////////////////////////////////////////////////
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
     platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
-    // TODO - PUT PLATFORMS HERE
-    platforms.create(125, 300, 'ground').setScale(.05, 25).refreshBody(); //Left wall
+    platforms.create(0, 100, 'ground');
+    platforms.create(400, 130, 'ground');
+    platforms.create(800, 160, 'ground');
+
+    platforms.create(1280, 280, 'ground');
+    platforms.create(880, 310, 'ground');
+    platforms.create(480, 340, 'ground');
+
+    platforms.create(0, 460, 'ground');
+    platforms.create(400, 490, 'ground');
+    platforms.create(800, 520, 'ground');
+
+    platforms.create(1280, 675, 'ground').setScale(1,3).refreshBody();
+    platforms.create(880, 685, 'ground').setScale(1,2).refreshBody();
+
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
@@ -368,7 +380,7 @@ function createLevel4() { //////////////////////////////////////////////////////
         child.allowGravity = false;
         child.anims.play('catTurn');
         child.setSize(0, 31);
-        child.setPosition(xCoord[i], yCoord[i]);
+        child.setPosition(xCoord[50], yCoord[50]);
         i++;
     });
 
