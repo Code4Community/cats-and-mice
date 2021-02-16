@@ -123,7 +123,7 @@ function createAnimations(realThis) {
 function createScoreAndCollisions(realThis) {
     //  The score
     scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
-
+    scoreText.setScrollFactor(0);
     //  Collide the player and the stars with the platforms
     realThis.physics.add.collider(player, platforms);
     realThis.physics.add.collider(cheeses, platforms);
