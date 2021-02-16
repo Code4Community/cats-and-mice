@@ -11,7 +11,7 @@ var gravity = 500;
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 1280,
+    width: 1080,
     height: 720,
     physics: {
         default: 'arcade',
@@ -96,9 +96,11 @@ function preload() {
     this.load.spritesheet('cat', 'assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
 }
 
-function createSky(realThis) {
+function createSky(realThis, width) {
     //  A simple background for our game
-    realThis.add.image(640, 360, 'sky').setScale(1.75);
+    sky = realThis.add.image(0,0, 'sky').setOrigin(0,0);
+    sky.displayWidth = width;
+    sky.displayHeight = game.config.height;
 }
 
 function initializePlayerAttributes(player) {
@@ -110,6 +112,7 @@ function initializePlayerAttributes(player) {
 }
 
 function createAnimations(realThis) {
+    
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
@@ -162,7 +165,7 @@ function createAnimations(realThis) {
 function createScoreAndCollisions(realThis) {
     //  The score
     scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
-
+    scoreText.setScrollFactor(0);
     //  Collide the player and the stars with the platforms
     realThis.physics.add.collider(player, platforms);
     realThis.physics.add.collider(cheeses, platforms);
@@ -176,14 +179,14 @@ function createScoreAndCollisions(realThis) {
 }
 
 function createLevel1() {
-    createSky(this);
-
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
-
+    platforms.add(ground);
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     //  Now let's create some ledges
     platforms.create(1000, 450, 'ground');
@@ -197,6 +200,8 @@ function createLevel1() {
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player);
 
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
@@ -237,14 +242,17 @@ function createLevel1() {
 }
 
 function createLevel2() {
-    createSky(this);
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
+    platforms.add(ground);
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
+
 
     // TODO - PUT PLATFORMS HERE
 
@@ -252,6 +260,8 @@ function createLevel2() {
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player);
 
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
@@ -292,14 +302,16 @@ function createLevel2() {
 }
 
 function createLevel3() {
-    createSky(this);
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
+    platforms.add(ground);
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     // TODO - PUT PLATFORMS HERE
 
@@ -307,6 +319,8 @@ function createLevel3() {
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player);
 
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
@@ -347,14 +361,16 @@ function createLevel3() {
 }
 
 function createLevel4() {
-    createSky(this);
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
+    platforms.add(ground);
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     // TODO - PUT PLATFORMS HERE
 
@@ -362,6 +378,8 @@ function createLevel4() {
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player);
 
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
