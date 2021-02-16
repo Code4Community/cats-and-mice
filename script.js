@@ -74,10 +74,10 @@ function preload ()
     this.load.spritesheet('cat','assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
 }
 
-function createSky(realThis) {
+function createSky(realThis, width) {
     //  A simple background for our game
     sky = realThis.add.image(0,0, 'sky').setOrigin(0,0);
-    sky.displayWidth = 1800;
+    sky.displayWidth = width;
     sky.displayHeight = game.config.height;
 }
 
@@ -149,7 +149,7 @@ function createScoreAndCollisions(realThis) {
 }
 
 function createLevel1() {
-    createSky(this);
+    createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
     ground = this.add.tileSprite(0,700,4000,50,"ground");
     // The platforms group contains the ground and the 2 ledges we can jump on
@@ -157,7 +157,6 @@ function createLevel1() {
     platforms.add(ground);
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    // platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     //  Now let's create some ledges
     platforms.create(1000, 450, 'ground');
@@ -211,20 +210,24 @@ function createLevel1() {
 }
 
 function createLevel2() {
-    createSky(this);
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
+    platforms.add(ground);
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
+
 
     // TODO - PUT PLATFORMS HERE
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
-
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
@@ -265,20 +268,23 @@ function createLevel2() {
 }
 
 function createLevel3() {
-    createSky(this);
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
+    platforms.add(ground);
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     // TODO - PUT PLATFORMS HERE
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
-
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
@@ -319,20 +325,23 @@ function createLevel3() {
 }
 
 function createLevel4() {
-    createSky(this);
+    createSky(this, 1280);
+    this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
+    ground = this.add.tileSprite(0,700,4000,50,"ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
+    platforms.add(ground);
 
     //  Here we create the ground.
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-    platforms.create(600, 760, 'ground').setScale(4).refreshBody();
 
     // TODO - PUT PLATFORMS HERE
    
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
-
+    this.cameras.main.startFollow(player);
+    this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
