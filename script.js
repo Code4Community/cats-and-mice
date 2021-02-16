@@ -8,7 +8,6 @@ var gameOver = false;
 var scoreText;
 var gravity = 500;
 
-
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
@@ -33,7 +32,7 @@ var game = new Phaser.Game(config);
 // Level selection dropdown
 document.getElementById('level-select').addEventListener('change', (event) => {
     switchLevel(event.target.value);
-});
+})
 
 // Respawn button
 document.getElementById('respawn').addEventListener('click', (event) => {
@@ -46,6 +45,9 @@ document.getElementById('velocity-x').addEventListener('change', (event) => {
 });
 document.getElementById('velocity-y').addEventListener('change', (event) => {
     player.velocityY = event.target.value;
+});
+document.getElementById('setgravity').addEventListener('click', (event) =>{
+    changeGravity(event.target.value);
 });
 
 function switchLevel(level) {
@@ -69,6 +71,21 @@ function switchLevel(level) {
             break;
     }
 }
+
+function changeGravity(gravityvalue){
+    switch (gravityvalue) {
+        case 'high':
+            player.setGravityY(0)
+            break;
+        case 'low':
+            player.setGravityY(-200)
+            break;
+        case 'flipped':
+            player.setGravityY(-1000)
+            break;
+    }
+}
+
 
 function preload() {
     this.load.image('sky', 'assets/sky.png');
@@ -378,7 +395,7 @@ function createLevel4() {
         child.anims.play('catTurn');
         child.setSize(0, 31);
         child.setPosition(xCoord[i], yCoord[i]);
-        i++;
+        i++
     });
 
     createScoreAndCollisions(this);
