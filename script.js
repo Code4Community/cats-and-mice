@@ -12,7 +12,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: createLevel4, //Temp
+        create: createLevel1, //Temp
         update: update
     }
 };
@@ -79,7 +79,7 @@ function createSky(realThis) {
 
 function createAnimations(realThis) {
     //  Player physics properties. Give the little guy a slight bounce.
-    player.setBounce(0.2);
+    //player.setBounce(0.2);
     player.setCollideWorldBounds(true);
 
     //  Our player animations, turning, walking left and walking right.
@@ -224,21 +224,26 @@ function createLevel2() {
 
     createAnimations(this);
 
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    //  Cheese locations
+
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 5,
         setXY: { x: 40, y: 0, stepX: 120 }
     });
+    //var i = 0;
     cheeses.children.iterate(function (child) {
 
         //  Give each star a slightly different bounce
-        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.2));
+
+        //child.setPosition(setXY);
+        //i++;
 
     });
 
-    let xCoord = [0, 300, 800, 1000, 1280, 1250];
-    let yCoord = [160, 300, 550, 400, 250, 660];
+    let xCoord = [200, 600, 800, 1000, 900, 1200];
+    let yCoord = [650, 450, 650, 650, 300, 500];
     cats = this.physics.add.group({
         key: 'cat',
         repeat: 5,
@@ -278,7 +283,7 @@ function createLevel3() {
     platforms.create(900, 200, 'ground').setScale(.4, 3).refreshBody(); //sky block
    
     //The player and its settings
-    player = this.physics.add.sprite(50, 600, 'mouse').setSize(20, 18);
+    player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
 
     createAnimations(this);
 
@@ -295,11 +300,11 @@ function createLevel3() {
 
     });
 
-    let xCoord = [0, 300, 800, 1000, 1280, 1250];
-    let yCoord = [160, 300, 550, 400, 250, 660];
+    let xCoord = [200, 800, 900, 1280, 400];
+    let yCoord = [600, 550, 100, 650, 200];
     cats = this.physics.add.group({
         key: 'cat',
-        repeat: 5,
+        repeat: 4,
         
     });
     var i = 0;
@@ -346,7 +351,7 @@ function createLevel4() { //////////////////////////////////////////////////////
 
    
     //The player and its settings
-    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    player = this.physics.add.sprite(100, 650, 'mouse').setSize(20, 18);
 
     createAnimations(this);
 
@@ -363,11 +368,11 @@ function createLevel4() { //////////////////////////////////////////////////////
 
     });
 
-    let xCoord = [0, 300, 800, 1000, 1280, 1250];
-    let yCoord = [160, 300, 550, 400, 250, 660];
+    let xCoord = [50, 350, 700, 800, 1200, 1200, 500, 100, 400, 800];
+    let yCoord = [50, 75, 100, 450, 200, 600, 400, 350, 250, 250];
     cats = this.physics.add.group({
         key: 'cat',
-        repeat: 5,
+        repeat: 9,
         
     });
     var i = 0;
@@ -380,7 +385,7 @@ function createLevel4() { //////////////////////////////////////////////////////
         child.allowGravity = false;
         child.anims.play('catTurn');
         child.setSize(0, 31);
-        child.setPosition(xCoord[50], yCoord[50]);
+        child.setPosition(xCoord[i], yCoord[i]);
         i++;
     });
 
@@ -482,8 +487,8 @@ function patrolPlatform(cat, platform)
 {   
     
     cat.setVelocityY(0);
-
-    if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width/2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width/2))
+                    //going left and hits left                                                          //going right and hits right
+    if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width/2 - 10) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width/2 - 10))
     {
         cat.body.velocity.x *= -1;
     }
