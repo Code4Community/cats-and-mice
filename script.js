@@ -1,3 +1,13 @@
+var player;
+var cheeses;
+var cats;
+var platforms;
+var cursors;
+var score = 0;
+var gameOver = false;
+var scoreText;
+var gravity = 500;
+
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
@@ -6,7 +16,7 @@ var config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 500 },
+            gravity: { y: gravity },
             debug: false
         }
     },
@@ -17,34 +27,34 @@ var config = {
     }
 };
 
-var player;
-var cheeses;
-var cats;
-var platforms;
-var cursors;
-var score = 0;
-var gameOver = false;
-var scoreText;
-var ground;
-var sky;
-
 var game = new Phaser.Game(config);
 
 // Level selection dropdown
 document.getElementById('level-select').addEventListener('change', (event) => {
     switchLevel(event.target.value);
-});
+})
 
 // Respawn button
 document.getElementById('respawn').addEventListener('click', (event) => {
     gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
+    initializePlayerAttributes(player)
+});
+
+document.getElementById('velocity-x').addEventListener('change', (event) => {
+    player.velocityX = event.target.value;
+});
+document.getElementById('velocity-y').addEventListener('change', (event) => {
+    player.velocityY = event.target.value;
+});
+document.getElementById('setgravity').addEventListener('click', (event) => {
+    changeGravity(event.target.value);
 });
 
 function switchLevel(level) {
     game.destroy(true);
-    switch(level) {
+    switch (level) {
         case '1':
             config.scene.create = createLevel1;
             game = new Phaser.Game(config);
@@ -64,14 +74,28 @@ function switchLevel(level) {
     }
 }
 
-function preload ()
-{
+function changeGravity(gravityvalue){
+    switch (gravityvalue) {
+        case 'high':
+            player.setGravityY(0)
+            break;
+        case 'low':
+            player.setGravityY(-200)
+            break;
+        case 'flipped':
+            player.setGravityY(-1000)
+            break;
+    }
+}
+
+
+function preload() {
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('cheese', 'assets/cheese.png');
     this.load.spritesheet('mouse', 'assets/mouse.png', { frameWidth: 41.5, frameHeight: 24 });
     this.load.image('particle', 'assets/cheese_crumb.png');
-    this.load.spritesheet('cat','assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
+    this.load.spritesheet('cat', 'assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
 }
 
 function createSky(realThis, width) {
@@ -79,6 +103,16 @@ function createSky(realThis, width) {
     sky = realThis.add.image(0,0, 'sky').setOrigin(0,0);
     sky.displayWidth = width;
     sky.displayHeight = game.config.height;
+}
+
+function initializePlayerAttributes(player) {
+    player.velocityX = 180;
+    player.velocityY = 430;
+    changeGravity('high');
+
+    document.getElementById('velocity-x').value = player.velocityX;
+    document.getElementById('velocity-y').value = player.velocityY;
+    document.getElementById('setgravity').value = 'high';
 }
 
 function createAnimations(realThis) {
@@ -97,7 +131,7 @@ function createAnimations(realThis) {
 
     realThis.anims.create({
         key: 'turn',
-        frames: [ { key: 'mouse', frame: 4 } ],
+        frames: [{ key: 'mouse', frame: 4 }],
         frameRate: 20
     });
 
@@ -117,7 +151,7 @@ function createAnimations(realThis) {
 
     realThis.anims.create({
         key: 'catTurn',
-        frames: [ { key: 'cat', frame: 4 } ],
+        frames: [{ key: 'cat', frame: 4 }],
         frameRate: 20
     });
 
@@ -165,9 +199,11 @@ function createLevel1() {
     platforms.create(175, 500, 'ground');
     platforms.create(450, 350, 'ground');
     platforms.create(1250, 300, 'ground');
-   
+
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
+
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
@@ -190,7 +226,7 @@ function createLevel1() {
     cats = this.physics.add.group({
         key: 'cat',
         repeat: 5,
-        
+
     });
     var i = 0;
     cats.children.iterate(function (child) {
@@ -223,9 +259,11 @@ function createLevel2() {
 
 
     // TODO - PUT PLATFORMS HERE
-   
+
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
+
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
@@ -248,7 +286,7 @@ function createLevel2() {
     cats = this.physics.add.group({
         key: 'cat',
         repeat: 5,
-        
+
     });
     var i = 0;
     cats.children.iterate(function (child) {
@@ -280,9 +318,11 @@ function createLevel3() {
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
 
     // TODO - PUT PLATFORMS HERE
-   
+
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
+
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
@@ -305,7 +345,7 @@ function createLevel3() {
     cats = this.physics.add.group({
         key: 'cat',
         repeat: 5,
-        
+
     });
     var i = 0;
     cats.children.iterate(function (child) {
@@ -337,9 +377,11 @@ function createLevel4() {
     //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
 
     // TODO - PUT PLATFORMS HERE
-   
+
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player);
+
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
@@ -362,7 +404,7 @@ function createLevel4() {
     cats = this.physics.add.group({
         key: 'cat',
         repeat: 5,
-        
+
     });
     var i = 0;
     cats.children.iterate(function (child) {
@@ -375,47 +417,43 @@ function createLevel4() {
         child.anims.play('catTurn');
         child.setSize(0, 31);
         child.setPosition(xCoord[i], yCoord[i]);
-        i++;
+        i++
     });
 
     createScoreAndCollisions(this);
 }
 
-function update ()
-{
-    if (gameOver)
-    {
+function update() {
+    if (gameOver) {
         return;
     }
 
-    if (cursors.left.isDown)
-    {
-        player.setVelocityX(-180);
+    if (cursors.left.isDown) {
+        player.setVelocityX(-1 * player.velocityX);
 
         player.anims.play('left', true);
     }
-    else if (cursors.right.isDown)
-    {
-        player.setVelocityX(180);
+    else if (cursors.right.isDown) {
+        player.setVelocityX(1 * player.velocityX);
 
         player.anims.play('right', true);
     }
-    else
-    {
+    else {
         player.setVelocityX(0);
 
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && player.body.touching.down)
-    {
-        player.setVelocityY(-430);
+    if (cursors.up.isDown && player.body.touching.down) {
+        player.setVelocityY(-1 * player.velocityY);
+    }
+    else if (cursors.down.isDown && player.body.touching.up) {
+        player.setVelocityY(1 * player.velocityY);
     }
 
 }
 
-function collectCheese (player, cheese)
-{
+function collectCheese(player, cheese) {
     cheese.disableBody(true, true);
 
     //  Add and update the score
@@ -436,11 +474,10 @@ function collectCheese (player, cheese)
         duration: 200,
         onComplete: () => {
             emitter.stop()
-            this.time.delayedCall(1000, () => {particle.removeEmitter(emitter)})
+            this.time.delayedCall(1000, () => { particle.removeEmitter(emitter) })
         }
     })
-    if (cheeses.countActive(true) === 0)
-    {
+    if (cheeses.countActive(true) === 0) {
         //  A new batch of stars to collect
         cheeses.children.iterate(function (child) {
 
@@ -461,8 +498,7 @@ function collectCheese (player, cheese)
     }
 }
 
-function hitCat (player, cat)
-{
+function hitCat(player, cat) {
     this.physics.pause();
 
     player.setTint(0xff0000);
@@ -472,13 +508,11 @@ function hitCat (player, cat)
     gameOver = true;
 }
 
-function patrolPlatform(cat, platform)
-{   
-    
+function patrolPlatform(cat, platform) {
+
     cat.setVelocityY(0);
 
-    if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width/2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width/2))
-    {
+    if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2)) {
         cat.body.velocity.x *= -1;
     }
 
