@@ -39,14 +39,16 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
+    initializePlayerAttributes(player)
 });
+
 document.getElementById('velocity-x').addEventListener('change', (event) => {
     player.velocityX = event.target.value;
 });
 document.getElementById('velocity-y').addEventListener('change', (event) => {
     player.velocityY = event.target.value;
 });
-document.getElementById('setgravity').addEventListener('click', (event) =>{
+document.getElementById('setgravity').addEventListener('click', (event) => {
     changeGravity(event.target.value);
 });
 
@@ -106,9 +108,11 @@ function createSky(realThis, width) {
 function initializePlayerAttributes(player) {
     player.velocityX = 180;
     player.velocityY = 430;
+    changeGravity('high');
 
     document.getElementById('velocity-x').value = player.velocityX;
     document.getElementById('velocity-y').value = player.velocityY;
+    document.getElementById('setgravity').value = 'high';
 }
 
 function createAnimations(realThis) {
