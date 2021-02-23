@@ -48,7 +48,7 @@ document.getElementById('velocity-x').addEventListener('change', (event) => {
 document.getElementById('velocity-y').addEventListener('change', (event) => {
     player.velocityY = event.target.value;
 });
-document.getElementById('setgravity').addEventListener('click', (event) => {
+document.getElementById('setgravity').addEventListener('change', (event) => {
     changeGravity(event.target.value);
 });
 
