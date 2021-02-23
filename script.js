@@ -74,7 +74,7 @@ function switchLevel(level) {
     }
 }
 
-function changeGravity(gravityvalue){
+function changeGravity(gravityvalue) {
     switch (gravityvalue) {
         case 'high':
             player.setGravityY(0)
@@ -100,7 +100,7 @@ function preload() {
 
 function createSky(realThis, width) {
     //  A simple background for our game
-    sky = realThis.add.image(0,0, 'sky').setOrigin(0,0);
+    sky = realThis.add.image(0, 0, 'sky').setOrigin(0, 0);
     sky.displayWidth = width;
     sky.displayHeight = game.config.height;
 }
@@ -116,7 +116,7 @@ function initializePlayerAttributes(player) {
 }
 
 function createAnimations(realThis) {
-    
+
     //  Player physics properties. Give the little guy a slight bounce.
     player.setBounce(0.2);
     player.setCollideWorldBounds(true);
@@ -185,7 +185,7 @@ function createScoreAndCollisions(realThis) {
 function createLevel1() {
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
-    ground = this.add.tileSprite(0,700,4000,50,"ground");
+    ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
@@ -248,7 +248,7 @@ function createLevel1() {
 function createLevel2() {
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
-    ground = this.add.tileSprite(0,700,4000,50,"ground");
+    ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
@@ -308,7 +308,7 @@ function createLevel2() {
 function createLevel3() {
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
-    ground = this.add.tileSprite(0,700,4000,50,"ground");
+    ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
@@ -367,7 +367,7 @@ function createLevel3() {
 function createLevel4() {
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
-    ground = this.add.tileSprite(0,700,4000,50,"ground");
+    ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
 
     // The platforms group contains the ground and the 2 ledges we can jump on
     platforms = this.physics.add.staticGroup();
