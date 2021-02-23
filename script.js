@@ -1,3 +1,5 @@
+const DEFAULT_GRAVITY = 'high';
+
 var player;
 var cheeses;
 var cats;
@@ -42,6 +44,7 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     initializePlayerAttributes(player)
 });
 
+// Code editor inputs
 document.getElementById('velocity-x').addEventListener('change', (event) => {
     player.velocityX = event.target.value;
 });
@@ -108,11 +111,11 @@ function createSky(realThis, width) {
 function initializePlayerAttributes(player) {
     player.velocityX = 180;
     player.velocityY = 430;
-    changeGravity('high');
+    changeGravity(DEFAULT_GRAVITY);
 
     document.getElementById('velocity-x').value = player.velocityX;
     document.getElementById('velocity-y').value = player.velocityY;
-    document.getElementById('setgravity').value = 'high';
+    document.getElementById('setgravity').value = DEFAULT_GRAVITY;
 }
 
 function createAnimations(realThis) {
@@ -167,18 +170,13 @@ function createAnimations(realThis) {
 }
 
 function createScoreAndCollisions(realThis) {
-    //  The score
     scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
     scoreText.setScrollFactor(0);
-    //  Collide the player and the stars with the platforms
+
     realThis.physics.add.collider(player, platforms);
     realThis.physics.add.collider(cheeses, platforms);
-
-    //  Checks to see if the player overlaps with any of the stars, if he does call the collectStar function
     realThis.physics.add.collider(cats, platforms, patrolPlatform, null, realThis);
-
     realThis.physics.add.overlap(player, cheeses, collectCheese, null, realThis);
-
     realThis.physics.add.collider(player, cats, hitCat, null, realThis);
 }
 
@@ -450,13 +448,11 @@ function update() {
     else if (cursors.down.isDown && player.body.touching.up) {
         player.setVelocityY(1 * player.velocityY);
     }
-
 }
 
 function collectCheese(player, cheese) {
     cheese.disableBody(true, true);
 
-    //  Add and update the score
     score += 1;
     scoreText.setText('Cheese: ' + score);
 
@@ -478,38 +474,22 @@ function collectCheese(player, cheese) {
         }
     })
     if (cheeses.countActive(true) === 0) {
-        //  A new batch of stars to collect
+        // new pieces of cheese to collect
         cheeses.children.iterate(function (child) {
-
             child.enableBody(true, child.x, 0, true, true);
-
         });
         var x = (player.x < 640) ? Phaser.Math.Between(640, 1280) : Phaser.Math.Between(0, 640);
-
-        // var cat = cats.create(400, 16, 'cat');
-        // cat.setBounce(1);
-        // cat.setCollideWorldBounds(true);
-        // var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
-        // cat.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
-        // cat.allowGravity = false;
-        // cat.anims.play('catTurn');
-        // cat.setSize(0, 31);
-
     }
 }
 
 function hitCat(player, cat) {
     this.physics.pause();
-
     player.setTint(0xff0000);
-
     player.anims.play('turn');
-
     gameOver = true;
 }
 
 function patrolPlatform(cat, platform) {
-
     cat.setVelocityY(0);
 
     if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2)) {
