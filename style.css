@@ -1,18 +1,28 @@
 body {
     margin: 0;
+    font-size: 1.2rem;
 }
  
 nav.navbar.navbar-dark.bg-dark.bg-scarlet {
     background-color: #bb0000 !important;
 }
 
+#navbar-inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 12px;
+}
+
 #container {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: 1fr 1fr;
     column-gap: 24px;
+    margin: 0 auto;
+    max-width: 1280px;
 }
 
 .variable-editor {
+    font-family: monospace;
     max-width: 100%;
     display: grid;
     grid-template-columns: auto auto auto;

@@ -11,7 +11,7 @@ var gravity = 500;
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 1080,
+    width: 960,
     height: 720,
     physics: {
         default: 'arcade',
