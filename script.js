@@ -42,13 +42,13 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     initializePlayerAttributes(player)
 });
 
-document.getElementById('velocity-x').addEventListener('change', (event) => {
+document.getElementById('velocity-x').addEventListener('input', (event) => {
     player.velocityX = event.target.value;
 });
-document.getElementById('velocity-y').addEventListener('change', (event) => {
+document.getElementById('velocity-y').addEventListener('input', (event) => {
     player.velocityY = event.target.value;
 });
-document.getElementById('setgravity').addEventListener('click', (event) => {
+document.getElementById('setgravity').addEventListener('input', (event) => {
     changeGravity(event.target.value);
 });
 
