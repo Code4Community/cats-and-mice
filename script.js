@@ -42,7 +42,8 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
-    initializePlayerAttributes(player)
+    initializePlayerAttributes(player);
+    score = 0;
 });
 
 document.getElementById('velocity-x').addEventListener('input', (event) => {
@@ -171,7 +172,7 @@ function createAnimations(realThis) {
 
 function createScoreAndCollisions(realThis) {
     //  The score
-    scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#FFF' });
     scoreText.setScrollFactor(0);
     //  Collide the player and the stars with the platforms
     realThis.physics.add.collider(player, platforms);
