@@ -177,7 +177,7 @@ function createLevel1() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 0,
+        repeat: 10,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
