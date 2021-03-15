@@ -6,12 +6,15 @@ var cursors;
 var score = 0;
 var gameOver = false;
 var scoreText;
+var victoryText;
+var ground;
+var sky;
 var gravity = 500;
 
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 1080,
+    width: 960,
     height: 720,
     physics: {
         default: 'arcade',
@@ -39,16 +42,17 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
-    initializePlayerAttributes(player)
+    initializePlayerAttributes(player);
+    score = 0;
 });
 
-document.getElementById('velocity-x').addEventListener('change', (event) => {
+document.getElementById('velocity-x').addEventListener('input', (event) => {
     player.velocityX = event.target.value;
 });
-document.getElementById('velocity-y').addEventListener('change', (event) => {
+document.getElementById('velocity-y').addEventListener('input', (event) => {
     player.velocityY = event.target.value;
 });
-document.getElementById('setgravity').addEventListener('change', (event) => {
+document.getElementById('setgravity').addEventListener('input', (event) => {
     changeGravity(event.target.value);
 });
 
@@ -168,7 +172,7 @@ function createAnimations(realThis) {
 
 function createScoreAndCollisions(realThis) {
     //  The score
-    scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#000' });
+    scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#FFF' });
     scoreText.setScrollFactor(0);
     //  Collide the player and the stars with the platforms
     realThis.physics.add.collider(player, platforms);
@@ -187,10 +191,9 @@ function createLevel1() {
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
     ground = this.add.tileSprite(0,700,4000,50,"ground");
     // The platforms group contains the ground and the 2 ledges we can jump on
+    
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
 
     //  Now let's create some ledges
     platforms.create(1000, 450, 'ground');
@@ -199,6 +202,9 @@ function createLevel1() {
     platforms.create(175, 500, 'ground');
     platforms.create(450, 350, 'ground');
     platforms.create(1250, 300, 'ground');
+
+     //Set top of world platform 
+     platforms.create(600,-63,'ground').setScale(4).refreshBody();
 
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
@@ -212,13 +218,18 @@ function createLevel1() {
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        setXY: { x: 40, y: 0, stepX: 120 }
+        // setXY: { x: 40, y: 0, stepX: 120 }
     });
+    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
+    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let j = 0;
     cheeses.children.iterate(function (child) {
-
         //  Give each star a slightly different bounce
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
+        child.allowGravity = false;
+        child.setCollideWorldBounds(true);
+        child.setPosition(cheeseX[j], cheeseY[j]);
+        j++;
     });
 
     let xCoord = [0, 300, 800, 1000, 1280, 1250];
@@ -276,18 +287,20 @@ function createLevel2() {
 
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 5,
-        setXY: { x: 40, y: 0, stepX: 120 }
-    });
-    //var i = 0;
+        repeat: 10,
+        // setXY: { x: 40, y: 0, stepX: 120 }
+    }); 
+
+    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
+    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let j = 0;
     cheeses.children.iterate(function (child) {
-
         //  Give each star a slightly different bounce
-        child.setBounceY(Phaser.Math.FloatBetween(0.1, 0.2));
-
-        //child.setPosition(setXY);
-        //i++;
-
+        child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+        child.allowGravity = false;
+        child.setCollideWorldBounds(true);
+        child.setPosition(cheeseX[j], cheeseY[j]);
+        j++;
     });
 
     let xCoord = [200, 600, 800, 1000, 900, 1200];
@@ -297,7 +310,7 @@ function createLevel2() {
         repeat: 5,
 
     });
-    var i = 0;
+    let i = 0;
     cats.children.iterate(function (child) {
 
         child.setBounce(1);
@@ -344,13 +357,18 @@ function createLevel3() {
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        setXY: { x: 40, y: 0, stepX: 120 }
+        // setXY: { x: 40, y: 0, stepX: 120 }
     });
+    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
+    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let j = 0;
     cheeses.children.iterate(function (child) {
-
         //  Give each star a slightly different bounce
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
+        child.allowGravity = false;
+        child.setCollideWorldBounds(true);
+        child.setPosition(cheeseX[j], cheeseY[j]);
+        j++;
     });
 
     let xCoord = [200, 800, 900, 1280, 400];
@@ -417,13 +435,18 @@ function createLevel4() {
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        setXY: { x: 40, y: 0, stepX: 120 }
+        // setXY: { x: 40, y: 0, stepX: 120 }
     });
+    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
+    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let j = 0;
     cheeses.children.iterate(function (child) {
-
         //  Give each star a slightly different bounce
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-
+        child.allowGravity = false;
+        child.setCollideWorldBounds(true);
+        child.setPosition(cheeseX[j], cheeseY[j]);
+        j++;
     });
 
     let xCoord = [50, 350, 700, 800, 1200, 1200, 500, 100, 400, 800];
@@ -504,24 +527,13 @@ function collectCheese(player, cheese) {
             this.time.delayedCall(1000, () => { particle.removeEmitter(emitter) })
         }
     })
-    if (cheeses.countActive(true) === 0) {
-        //  A new batch of stars to collect
-        cheeses.children.iterate(function (child) {
-
-            child.enableBody(true, child.x, 0, true, true);
-
-        });
-        var x = (player.x < 640) ? Phaser.Math.Between(640, 1280) : Phaser.Math.Between(0, 640);
-
-        // var cat = cats.create(400, 16, 'cat');
-        // cat.setBounce(1);
-        // cat.setCollideWorldBounds(true);
-        // var multiplier = Phaser.Math.Between(0, 1) == 0 ? -1 : 1;
-        // cat.setVelocity(Phaser.Math.Between(100, 200) * multiplier, 20);
-        // cat.allowGravity = false;
-        // cat.anims.play('catTurn');
-        // cat.setSize(0, 31);
-
+    if (cheeses.countActive(true) === 0)
+    {
+        victoryText = this.add.text(380, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
+        victoryText.setScrollFactor(0);
+        this.physics.pause();
+        player.anims.play('turn');
+        gameOver = true;
     }
 }
 
