@@ -84,7 +84,7 @@ function switchLevel(level) {
             game = new Phaser.Game(config);
             break;
     }
-    document.getElementById('nextLevel').style.display = "none";
+    document.getElementById('nextLevel').disabled = true;
 }
 
 function changeGravity(gravityvalue){
@@ -546,9 +546,8 @@ function collectCheese(player, cheese) {
         let currentLevel = document.getElementById('level-select').value;
         currentLevel = parseInt(currentLevel);
         if (currentLevel < MAX_LEVEL) {
-            document.getElementById('nextLevel').style.display = "inline-block";
+            document.getElementById('nextLevel').disabled = false;
         }
-
     }
 }
 
