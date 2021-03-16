@@ -10,6 +10,7 @@ var victoryText;
 var ground;
 var sky;
 var gravity = 500;
+const MAX_LEVEL = 4;
 
 var config = {
     type: Phaser.AUTO,
@@ -46,6 +47,13 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     score = 0;
 });
 
+document.getElementById('nextLevel').addEventListener('click', (event) => {
+    let currentLevel = document.getElementById('level-select').value;
+    currentLevel = parseInt(currentLevel);
+    switchLevel('' + (currentLevel + 1));
+
+});
+
 document.getElementById('velocity-x').addEventListener('input', (event) => {
     player.velocityX = event.target.value;
 });
@@ -76,6 +84,7 @@ function switchLevel(level) {
             game = new Phaser.Game(config);
             break;
     }
+    document.getElementById('nextLevel').style.display = "none";
 }
 
 function changeGravity(gravityvalue){
@@ -529,11 +538,17 @@ function collectCheese(player, cheese) {
     })
     if (cheeses.countActive(true) === 0)
     {
-        victoryText = this.add.text(380, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
+        victoryText = this.add.text(330, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
         victoryText.setScrollFactor(0);
         this.physics.pause();
         player.anims.play('turn');
         gameOver = true;
+        let currentLevel = document.getElementById('level-select').value;
+        currentLevel = parseInt(currentLevel);
+        if (currentLevel < MAX_LEVEL) {
+            document.getElementById('nextLevel').style.display = "inline-block";
+        }
+
     }
 }
 

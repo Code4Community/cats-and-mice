@@ -33,3 +33,7 @@ nav.navbar.navbar-dark.bg-dark.bg-scarlet {
 .variable-editor > input, .variable-editor > select {
     width: 100px;
 }
+
+#nextLevel {
+    display: none;
+}
