@@ -46,6 +46,13 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     score = 0;
 });
 
+document.getElementById('nextLevel').addEventListener('click', (event) => {
+    let currentLevel = document.getElementById('level-select').value;
+    currentLevel = parseInt(currentLevel);
+    switchLevel('' + (currentLevel + 1));
+
+});
+
 document.getElementById('velocity-x').addEventListener('input', (event) => {
     player.velocityX = event.target.value;
 });
@@ -76,6 +83,7 @@ function switchLevel(level) {
             game = new Phaser.Game(config);
             break;
     }
+    document.getElementById('nextLevel').style.display = "none";
 }
 
 function changeGravity(gravityvalue){
@@ -217,7 +225,7 @@ function createLevel1() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 0,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
@@ -506,11 +514,17 @@ function collectCheese(player, cheese) {
     })
     if (cheeses.countActive(true) === 0)
     {
-        victoryText = this.add.text(380, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
+        victoryText = this.add.text(330, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
         victoryText.setScrollFactor(0);
         this.physics.pause();
         player.anims.play('turn');
         gameOver = true;
+        let currentLevel = document.getElementById('level-select').value;
+        currentLevel = parseInt(currentLevel);
+        if (currentLevel < 4) {
+            document.getElementById('nextLevel').style.display = "inline-block";
+        }
+
     }
 }
 
