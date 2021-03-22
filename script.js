@@ -25,7 +25,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: createLevel4, //Temp
+        create: createLevel1, //Temp
         update: update
     }
 };
