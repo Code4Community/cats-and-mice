@@ -40,18 +40,14 @@ document.getElementById('level-select').addEventListener('change', (event) => {
 
 // Respawn button
 document.getElementById('respawn').addEventListener('click', (event) => {
-    gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
-    initializePlayerAttributes(player);
-    score = 0;
 });
 
 document.getElementById('nextLevel').addEventListener('click', (event) => {
     let currentLevel = document.getElementById('level-select').value;
     currentLevel = parseInt(currentLevel);
     switchLevel('' + (currentLevel + 1));
-
 });
 
 document.getElementById('velocity-x').addEventListener('input', (event) => {
@@ -85,6 +81,9 @@ function switchLevel(level) {
             break;
     }
     document.getElementById('nextLevel').style.display = "none";
+    initializePlayerAttributes(player);
+    score = 0;
+    gameOver = false;
 }
 
 function changeGravity(gravityvalue){
@@ -226,7 +225,7 @@ function createLevel1() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 0,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
@@ -331,6 +330,8 @@ function createLevel2() {
         child.setSize(0, 31);
         child.setPosition(xCoord[i], yCoord[i]);
         i++;
+
+        
     });
 
     createScoreAndCollisions(this);
