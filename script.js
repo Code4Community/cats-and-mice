@@ -80,7 +80,7 @@ function switchLevel(level) {
             game = new Phaser.Game(config);
             break;
     }
-    document.getElementById('nextLevel').style.display = "none";
+    document.getElementById('nextLevel').disabled = true;
     initializePlayerAttributes(player);
     score = 0;
     gameOver = false;
@@ -225,11 +225,11 @@ function createLevel1() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 14,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
-    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
-    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let cheeseX = [60, 160, 60, 250, 300, 300, 450, 600, 650, 800, 650, 800, 900, 1100, 1150];
+    let cheeseY = [60, 60, 600, 600, 160, 400, 160, 160, 500, 500, 660, 660, 400, 400, 160];
     let j = 0;
     cheeses.children.iterate(function (child) {
         //  Give each star a slightly different bounce
@@ -299,8 +299,8 @@ function createLevel2() {
         // setXY: { x: 40, y: 0, stepX: 120 }
     }); 
 
-    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
-    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let cheeseX = [240, 340, 440, 550, 660, 750, 870, 1000, 870, 1000, 1200];
+    let cheeseY = [550, 550, 550, 400, 400, 660, 660, 660, 200, 200, 500];
     let j = 0;
     cheeses.children.iterate(function (child) {
         //  Give each star a slightly different bounce
@@ -354,6 +354,7 @@ function createLevel3() {
     platforms.create(400, 300, 'ground').setScale(.4, 3).refreshBody(); //sky block
     platforms.create(330, 150, 'ground').setScale(.05, 11).refreshBody(); //sky block hang thing
     platforms.create(900, 200, 'ground').setScale(.4, 3).refreshBody(); //sky block
+    platforms.create(830, 100, 'ground').setScale(.05, 8).refreshBody(); //sky block right hang thing
    
     //The player and its settings
     player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
@@ -366,11 +367,11 @@ function createLevel3() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 7,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
-    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
-    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let cheeseX = [200, 400, 400, 600, 800, 900, 950, 1100];
+    let cheeseY = [500, 150, 500, 500, 500, 100, 660, 660];
     let j = 0;
     cheeses.children.iterate(function (child) {
         //  Give each star a slightly different bounce
@@ -444,11 +445,11 @@ function createLevel4() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 18,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
-    let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
-    let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
+    let cheeseX = [300, 500, 750, 900, 950, 1200, 100, 300, 500, 750, 950, 400, 550, 800, 900, 700, 500, 300, 50];
+    let cheeseY = [600, 600, 600, 370, 600, 600, 370, 370, 370, 370, 200, 200, 200, 200, 50, 50, 50, 50, 50];
     let j = 0;
     cheeses.children.iterate(function (child) {
         //  Give each star a slightly different bounce
@@ -547,9 +548,8 @@ function collectCheese(player, cheese) {
         let currentLevel = document.getElementById('level-select').value;
         currentLevel = parseInt(currentLevel);
         if (currentLevel < MAX_LEVEL) {
-            document.getElementById('nextLevel').style.display = "inline-block";
+            document.getElementById('nextLevel').disabled = false;
         }
-
     }
 }
 
