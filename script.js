@@ -435,11 +435,11 @@ function createLevel4() {
     //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
     cheeses = this.physics.add.group({
         key: 'cheese',
-        repeat: 10,
+        repeat: 18,
         // setXY: { x: 40, y: 0, stepX: 120 }
     });
-    let cheeseX = [300, 500, 750, 900, 1200, 100, 300, 500, 750, 900, 300, 550, 800, 950];
-    let cheeseY = [600, 600, 600, 600, 600, 370, 370, 370, 370, 200, 200, 200, 200];
+    let cheeseX = [300, 500, 750, 900, 950, 1200, 100, 300, 500, 750, 950, 400, 550, 800, 900, 700, 500, 300, 50];
+    let cheeseY = [600, 600, 600, 370, 600, 600, 370, 370, 370, 370, 200, 200, 200, 200, 50, 50, 50, 50, 50];
     let j = 0;
     cheeses.children.iterate(function (child) {
         //  Give each star a slightly different bounce
