@@ -10,6 +10,7 @@ var victoryText;
 var ground;
 var sky;
 var gravity = 500;
+const MAX_LEVEL = 4;
 
 var config = {
     type: Phaser.AUTO,
@@ -25,7 +26,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: createLevel1, //Temp
+        create: createLevel1,
         update: update
     }
 };
@@ -39,11 +40,14 @@ document.getElementById('level-select').addEventListener('change', (event) => {
 
 // Respawn button
 document.getElementById('respawn').addEventListener('click', (event) => {
-    gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
-    initializePlayerAttributes(player, 0, 0);
-    score = 0;
+});
+
+document.getElementById('nextLevel').addEventListener('click', (event) => {
+    let currentLevel = document.getElementById('level-select').value;
+    currentLevel = parseInt(currentLevel);
+    switchLevel('' + (currentLevel + 1));
 });
 
 document.getElementById('velocity-x').addEventListener('input', (event) => {
@@ -76,6 +80,9 @@ function switchLevel(level) {
             game = new Phaser.Game(config);
             break;
     }
+    document.getElementById('nextLevel').disabled = true;
+    score = 0;
+    gameOver = false;
 }
 
 function changeGravity(gravityvalue){
@@ -277,6 +284,9 @@ function createLevel2() {
     platforms.create(950, 350, 'ground').setScale(.60, 1).refreshBody(); //Sky platform
     platforms.create(125, 700, 'ground').setScale(.05, 5).refreshBody(); //Left wall
     platforms.create(1200, 650, 'ground').setScale(.5, 6).refreshBody(); //Right block
+
+    //Set top of world platform 
+     platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings //can move to fulfill level design 
     var playerX = 200;
@@ -351,6 +361,9 @@ function createLevel3() {
     platforms.create(330, 150, 'ground').setScale(.05, 11).refreshBody(); //sky block hang thing
     platforms.create(900, 200, 'ground').setScale(.4, 3).refreshBody(); //sky block
     platforms.create(830, 100, 'ground').setScale(.05, 8).refreshBody(); //sky block right hang thing
+
+    //Set top of world platform 
+    platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
     var playerX = 300;
@@ -432,6 +445,8 @@ function createLevel4() {
     platforms.create(1280, 675, 'ground').setScale(1,3).refreshBody();
     platforms.create(880, 685, 'ground').setScale(1,2).refreshBody();
 
+    //Set top of world platform 
+    platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
     var playerX = 400;
@@ -542,11 +557,16 @@ function collectCheese(player, cheese) {
     })
     if (cheeses.countActive(true) === 0)
     {
-        victoryText = this.add.text(380, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
+        victoryText = this.add.text(330, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
         victoryText.setScrollFactor(0);
         this.physics.pause();
         player.anims.play('turn');
         gameOver = true;
+        let currentLevel = document.getElementById('level-select').value;
+        currentLevel = parseInt(currentLevel);
+        if (currentLevel < MAX_LEVEL) {
+            document.getElementById('nextLevel').disabled = false;
+        }
     }
 }
 
