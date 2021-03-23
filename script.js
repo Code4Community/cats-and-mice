@@ -11,7 +11,7 @@ var ground;
 var sky;
 var gravity = 500;
 const MAX_LEVEL = 4;
-
+//put in values that make sense for the default values
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
@@ -214,8 +214,8 @@ function createLevel1() {
      platforms.create(600,-63,'ground').setScale(4).refreshBody();
 
     //The player and its settings ////////////////////////////////////////////////////////////////
-    var playerX = 100;
-    var playerY = 101;
+    var playerX = 200;
+    var playerY = 450;
     
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player, playerX, playerY);
@@ -289,8 +289,8 @@ function createLevel2() {
      platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings //can move to fulfill level design 
-    var playerX = 200;
-    var playerY = 202;
+    var playerX = 150;
+    var playerY = 250;
     
     player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player, playerX, playerY);
@@ -366,8 +366,8 @@ function createLevel3() {
     platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
-    var playerX = 300;
-    var playerY = 303;
+    var playerX = 200;
+    var playerY = 300;
     
     player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player, playerX, playerY);
@@ -449,8 +449,8 @@ function createLevel4() {
     platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
-    var playerX = 400;
-    var playerY = 404;
+    var playerX = 200;
+    var playerY = 180;
     
     player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player, playerX, playerY);
