@@ -40,18 +40,14 @@ document.getElementById('level-select').addEventListener('change', (event) => {
 
 // Respawn button
 document.getElementById('respawn').addEventListener('click', (event) => {
-    gameOver = false;
     let currentLevel = document.getElementById('level-select').value;
     switchLevel(currentLevel);
-    initializePlayerAttributes(player);
-    score = 0;
 });
 
 document.getElementById('nextLevel').addEventListener('click', (event) => {
     let currentLevel = document.getElementById('level-select').value;
     currentLevel = parseInt(currentLevel);
     switchLevel('' + (currentLevel + 1));
-
 });
 
 document.getElementById('velocity-x').addEventListener('input', (event) => {
@@ -85,6 +81,9 @@ function switchLevel(level) {
             break;
     }
     document.getElementById('nextLevel').disabled = true;
+    initializePlayerAttributes(player);
+    score = 0;
+    gameOver = false;
 }
 
 function changeGravity(gravityvalue){
@@ -331,6 +330,8 @@ function createLevel2() {
         child.setSize(0, 31);
         child.setPosition(xCoord[i], yCoord[i]);
         i++;
+
+        
     });
 
     createScoreAndCollisions(this);
