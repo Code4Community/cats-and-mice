@@ -282,6 +282,9 @@ function createLevel2() {
     platforms.create(950, 350, 'ground').setScale(.60, 1).refreshBody(); //Sky platform
     platforms.create(125, 700, 'ground').setScale(.05, 5).refreshBody(); //Left wall
     platforms.create(1200, 650, 'ground').setScale(.5, 6).refreshBody(); //Right block
+
+    //Set top of world platform 
+     platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings //can move to fulfill level design 
     player = this.physics.add.sprite(50, 620, 'mouse').setSize(20, 18);
@@ -355,6 +358,9 @@ function createLevel3() {
     platforms.create(330, 150, 'ground').setScale(.05, 11).refreshBody(); //sky block hang thing
     platforms.create(900, 200, 'ground').setScale(.4, 3).refreshBody(); //sky block
     platforms.create(830, 100, 'ground').setScale(.05, 8).refreshBody(); //sky block right hang thing
+
+    //Set top of world platform 
+    platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
     player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
@@ -433,6 +439,8 @@ function createLevel4() {
     platforms.create(1280, 675, 'ground').setScale(1,3).refreshBody();
     platforms.create(880, 685, 'ground').setScale(1,2).refreshBody();
 
+    //Set top of world platform 
+    platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
     player = this.physics.add.sprite(100, 650, 'mouse').setSize(20, 18);
