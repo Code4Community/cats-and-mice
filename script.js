@@ -53,9 +53,29 @@ document.getElementById('nextLevel').addEventListener('click', (event) => {
 document.getElementById('velocity-x').addEventListener('input', (event) => {
     player.velocityX = event.target.value;
 });
+
+document.getElementById('velocity-x').oninput  = function(){
+    if (this.value > 1000) {
+        this.value = 1000;
+    }
+    if (this.value < 0){
+        this.value = 1;
+    }
+}
+
 document.getElementById('velocity-y').addEventListener('input', (event) => {
     player.velocityY = event.target.value;
 });
+ 
+document.getElementById('velocity-y').oninput  = function(){
+    if (this.value > 5000) {
+        this.value = 5000;
+    }
+    if (this.value < 0){
+        this.value = 1;
+    }
+}
+
 document.getElementById('setgravity').addEventListener('input', (event) => {
     changeGravity(event.target.value);
 });
@@ -110,7 +130,7 @@ function preload() {
 }
 
 function createSky(realThis, width) {
-    //  A simple background for our game
+    // A simple background for our game
     sky = realThis.add.image(0,0, 'sky').setOrigin(0,0);
     sky.displayWidth = width;
     sky.displayHeight = game.config.height;
