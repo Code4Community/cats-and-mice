@@ -11,7 +11,7 @@ var ground;
 var sky;
 var gravity = 500;
 const MAX_LEVEL = 4;
-
+//put in values that make sense for the default values
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
@@ -26,7 +26,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: createLevel1, //Temp
+        create: createLevel1,
         update: update
     }
 };
@@ -81,7 +81,6 @@ function switchLevel(level) {
             break;
     }
     document.getElementById('nextLevel').disabled = true;
-    initializePlayerAttributes(player);
     score = 0;
     gameOver = false;
 }
@@ -117,9 +116,9 @@ function createSky(realThis, width) {
     sky.displayHeight = game.config.height;
 }
 
-function initializePlayerAttributes(player) {
-    player.velocityX = 180;
-    player.velocityY = 430;
+function initializePlayerAttributes(player, xVel, yVel) {
+    player.velocityX = xVel;
+    player.velocityY = yVel;
     changeGravity('high');
 
     document.getElementById('velocity-x').value = player.velocityX;
@@ -214,9 +213,12 @@ function createLevel1() {
      //Set top of world platform 
      platforms.create(600,-63,'ground').setScale(4).refreshBody();
 
-    //The player and its settings
+    //The player and its settings ////////////////////////////////////////////////////////////////
+    var playerX = 200;
+    var playerY = 450;
+    
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
-    initializePlayerAttributes(player);
+    initializePlayerAttributes(player, playerX, playerY);
 
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
@@ -287,8 +289,11 @@ function createLevel2() {
      platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings //can move to fulfill level design 
-    player = this.physics.add.sprite(50, 620, 'mouse').setSize(20, 18);
-    initializePlayerAttributes(player);
+    var playerX = 150;
+    var playerY = 250;
+    
+    player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player, playerX, playerY);
 
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
@@ -333,8 +338,6 @@ function createLevel2() {
         child.setSize(0, 31);
         child.setPosition(xCoord[i], yCoord[i]);
         i++;
-
-        
     });
 
     createScoreAndCollisions(this);
@@ -363,8 +366,11 @@ function createLevel3() {
     platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
+    var playerX = 200;
+    var playerY = 300;
+    
     player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
-    initializePlayerAttributes(player);
+    initializePlayerAttributes(player, playerX, playerY);
 
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
@@ -443,8 +449,11 @@ function createLevel4() {
     platforms.create(600,-63,'ground').setScale(4).refreshBody();
    
     //The player and its settings
-    player = this.physics.add.sprite(100, 650, 'mouse').setSize(20, 18);
-    initializePlayerAttributes(player);
+    var playerX = 200;
+    var playerY = 180;
+    
+    player = this.physics.add.sprite(50, 650, 'mouse').setSize(20, 18);
+    initializePlayerAttributes(player, playerX, playerY);
 
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
