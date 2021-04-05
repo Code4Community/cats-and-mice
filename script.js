@@ -14,7 +14,7 @@ var gravity = 500;
 var config = {
     type: Phaser.AUTO,
     parent: 'game',
-    width: 960,
+    width: 960, //game window dimensions
     height: 720,
     physics: {
         default: 'arcade',
@@ -25,7 +25,7 @@ var config = {
     },
     scene: {
         preload: preload,
-        create: createLevel1, //Temp
+        create: createLevel1, // Starts game at level 1
         update: update
     }
 };
@@ -45,7 +45,7 @@ document.getElementById('respawn').addEventListener('click', (event) => {
     initializePlayerAttributes(player);
     score = 0;
 });
-
+//user inputed speed, jump, and gravity values from text box
 document.getElementById('velocity-x').addEventListener('input', (event) => {
     player.velocityX = event.target.value;
 });
@@ -55,7 +55,7 @@ document.getElementById('velocity-y').addEventListener('input', (event) => {
 document.getElementById('setgravity').addEventListener('input', (event) => {
     changeGravity(event.target.value);
 });
-
+// Selects and calls the createLevel functions based on drop down selection
 function switchLevel(level) {
     game.destroy(true);
     switch (level) {
@@ -77,7 +77,7 @@ function switchLevel(level) {
             break;
     }
 }
-
+//Uses gravity drop down to change gravity level
 function changeGravity(gravityvalue){
     switch (gravityvalue) {
         case 'high':
@@ -92,7 +92,7 @@ function changeGravity(gravityvalue){
     }
 }
 
-
+//loads in visuals
 function preload() {
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
@@ -109,6 +109,7 @@ function createSky(realThis, width) {
     sky.displayHeight = game.config.height;
 }
 
+// sets default speed, jump, gravity
 function initializePlayerAttributes(player) {
     player.velocityX = 180;
     player.velocityY = 430;
@@ -170,6 +171,7 @@ function createAnimations(realThis) {
     cursors = realThis.input.keyboard.createCursorKeys();
 }
 
+
 function createScoreAndCollisions(realThis) {
     //  The score
     scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#FFF' });
@@ -186,7 +188,7 @@ function createScoreAndCollisions(realThis) {
     realThis.physics.add.collider(player, cats, hitCat, null, realThis);
 }
 
-function createLevel1() {
+function createLevel1() { //puts in all platforms and sprites for level 1
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
     ground = this.add.tileSprite(0,700,4000,50,"ground");
@@ -196,7 +198,7 @@ function createLevel1() {
     platforms.add(ground);
 
     //  Now let's create some ledges
-    platforms.create(1000, 450, 'ground');
+    platforms.create(1000, 450, 'ground'); //these are all 6 platforms
     platforms.create(50, 200, 'ground');
     platforms.create(750, 620, 'ground');
     platforms.create(175, 500, 'ground');
@@ -207,19 +209,19 @@ function createLevel1() {
      platforms.create(600,-63,'ground').setScale(4).refreshBody();
 
     //The player and its settings
-    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18);
+    player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18); //puts the mouse in the game
     initializePlayerAttributes(player);
 
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    //  Some cheese to collect, all spaced out throughout the map
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        // setXY: { x: 40, y: 0, stepX: 120 }
     });
+    //cheese locations
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
     let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
     let j = 0;
@@ -231,7 +233,7 @@ function createLevel1() {
         child.setPosition(cheeseX[j], cheeseY[j]);
         j++;
     });
-
+    //cat locations
     let xCoord = [0, 300, 800, 1000, 1280, 1250];
     let yCoord = [160, 300, 550, 400, 250, 660];
     cats = this.physics.add.group({
@@ -256,7 +258,7 @@ function createLevel1() {
     createScoreAndCollisions(this);
 }
 
-function createLevel2() {
+function createLevel2() { //puts in all platforms and sprites for level 2
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
     ground = this.add.tileSprite(0,700,4000,50,"ground");
@@ -265,11 +267,8 @@ function createLevel2() {
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
 
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
 
-
-    // All blocks
+    // These are platforms for level 2
     platforms.create(600, 600, 'ground').setScale(.5, 7).refreshBody(); //middle block
     platforms.create(950, 350, 'ground').setScale(.60, 1).refreshBody(); //Sky platform
     platforms.create(125, 700, 'ground').setScale(.05, 5).refreshBody(); //Left wall
@@ -282,18 +281,17 @@ function createLevel2() {
     this.cameras.main.startFollow(player);
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
-
-    //  Cheese locations
-
+   
+    //  Some cheese to collect, all spaced out throughout the map
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        // setXY: { x: 40, y: 0, stepX: 120 }
     }); 
-
+    //  Cheese locations
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
     let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
     let j = 0;
+    //spawns in cheese
     cheeses.children.iterate(function (child) {
         //  Give each star a slightly different bounce
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
@@ -302,15 +300,16 @@ function createLevel2() {
         child.setPosition(cheeseX[j], cheeseY[j]);
         j++;
     });
-
+    //cat locations
     let xCoord = [200, 600, 800, 1000, 900, 1200];
     let yCoord = [650, 450, 650, 650, 300, 500];
     cats = this.physics.add.group({
         key: 'cat',
-        repeat: 5,
+        repeat: 5, 
 
     });
     let i = 0;
+    //spawns in cats
     cats.children.iterate(function (child) {
 
         child.setBounce(1);
@@ -327,7 +326,7 @@ function createLevel2() {
     createScoreAndCollisions(this);
 }
 
-function createLevel3() {
+function createLevel3() { //puts in all platforms and sprites for level 3
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
     ground = this.add.tileSprite(0,700,4000,50,"ground");
@@ -336,8 +335,7 @@ function createLevel3() {
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
 
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
+    //These are platforms for level 3
 
     platforms.create(200, 700, 'ground').setScale(.3, 5).refreshBody(); //Left wall
     platforms.create(800, 700, 'ground').setScale(.3, 5).refreshBody(); //Right wall
@@ -353,12 +351,13 @@ function createLevel3() {
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    //  Some cheese to collect, all spaced out throughout the map
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        // setXY: { x: 40, y: 0, stepX: 120 }
     });
+
+    //cheese locations
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
     let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
     let j = 0;
@@ -370,12 +369,12 @@ function createLevel3() {
         child.setPosition(cheeseX[j], cheeseY[j]);
         j++;
     });
-
+    //cat locations
     let xCoord = [200, 800, 900, 1280, 400];
     let yCoord = [600, 550, 100, 650, 200];
     cats = this.physics.add.group({
         key: 'cat',
-        repeat: 4, // something fishy going on here, 5 pairs of coordinates but repeat set to 4?
+        repeat: 4, // 5 cats total. Always one less than # of cats
         
     });
     var i = 0;
@@ -395,7 +394,7 @@ function createLevel3() {
     createScoreAndCollisions(this);
 }
 
-function createLevel4() {
+function createLevel4() { //puts in all platforms and sprites for level 4
     createSky(this, 1280);
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
     ground = this.add.tileSprite(0,700,4000,50,"ground");
@@ -404,25 +403,25 @@ function createLevel4() {
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
 
-    //  Here we create the ground.
-    //  Scale it to fit the width of the game (the original sprite is 400x32 in size)
-
+    // row 1 platforms
     platforms.create(0, 100, 'ground');
     platforms.create(400, 130, 'ground');
     platforms.create(800, 160, 'ground');
 
+    // row 2 platforms 
     platforms.create(1280, 280, 'ground');
     platforms.create(880, 310, 'ground');
     platforms.create(480, 340, 'ground');
 
+    // row 3 platforms
     platforms.create(0, 460, 'ground');
     platforms.create(400, 490, 'ground');
     platforms.create(800, 520, 'ground');
 
+    // top platforms
     platforms.create(1280, 675, 'ground').setScale(1,3).refreshBody();
     platforms.create(880, 685, 'ground').setScale(1,2).refreshBody();
-
-   
+  
     //The player and its settings
     player = this.physics.add.sprite(100, 650, 'mouse').setSize(20, 18);
     initializePlayerAttributes(player);
@@ -431,24 +430,25 @@ function createLevel4() {
     this.cameras.main.setBounds(0, 0, sky.displayWidth, sky.displayHeight);
     createAnimations(this);
 
-    //  Some stars to collect, 12 in total, evenly spaced 70 pixels apart along the x axis
+    //  Some cheese to collect, all spaced out throughout the map
     cheeses = this.physics.add.group({
         key: 'cheese',
         repeat: 10,
-        // setXY: { x: 40, y: 0, stepX: 120 }
     });
+
+    //cheese locations
     let cheeseX = [40, 140, 240, 340, 440, 550, 660, 750, 850, 950];
     let cheeseY = [160, 300, 300, 550, 550, 400, 300, 250, 660, 660];
     let j = 0;
     cheeses.children.iterate(function (child) {
-        //  Give each star a slightly different bounce
+        //  Give each piece of cheese a slightly different bounce
         child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
         child.allowGravity = false;
         child.setCollideWorldBounds(true);
         child.setPosition(cheeseX[j], cheeseY[j]);
         j++;
     });
-
+    //cat locations
     let xCoord = [50, 350, 700, 800, 1200, 1200, 500, 100, 400, 800];
     let yCoord = [50, 75, 100, 450, 200, 600, 400, 350, 250, 250];
     cats = this.physics.add.group({
@@ -473,36 +473,38 @@ function createLevel4() {
     createScoreAndCollisions(this);
 }
 
+// controls for mouse using arrow keys
 function update() {
     if (gameOver) {
         return;
     }
 
-    if (cursors.left.isDown) {
+    if (cursors.left.isDown) { //left
         player.setVelocityX(-1 * player.velocityX);
 
         player.anims.play('left', true);
     }
-    else if (cursors.right.isDown) {
+    else if (cursors.right.isDown) { //right
         player.setVelocityX(1 * player.velocityX);
 
         player.anims.play('right', true);
     }
-    else {
+    else { //idle
         player.setVelocityX(0);
 
         player.anims.play('turn');
     }
 
-    if (cursors.up.isDown && player.body.touching.down) {
+    if (cursors.up.isDown && player.body.touching.down) { //jump only on floor
         player.setVelocityY(-1 * player.velocityY);
     }
-    else if (cursors.down.isDown && player.body.touching.up) {
+    else if (cursors.down.isDown && player.body.touching.up) { //jump while gravity reversed, should we do up button?
         player.setVelocityY(1 * player.velocityY);
     }
 
 }
 
+// deals with cheese collection and score
 function collectCheese(player, cheese) {
     cheese.disableBody(true, true);
 
@@ -527,7 +529,7 @@ function collectCheese(player, cheese) {
             this.time.delayedCall(1000, () => { particle.removeEmitter(emitter) })
         }
     })
-    if (cheeses.countActive(true) === 0)
+    if (cheeses.countActive(true) === 0) //if no more cheeses left, you win
     {
         victoryText = this.add.text(380, 160, 'You Win!', { fontSize: '70px', fill: '#FFF', align: 'center',});
         victoryText.setScrollFactor(0);
@@ -537,7 +539,7 @@ function collectCheese(player, cheese) {
     }
 }
 
-function hitCat(player, cat) {
+function hitCat(player, cat) { // If you're bad and you hit a cat, you lose and have to start level over
     this.physics.pause();
 
     player.setTint(0xff0000);
@@ -547,15 +549,16 @@ function hitCat(player, cat) {
     gameOver = true;
 }
 
-function patrolPlatform(cat, platform) {
+function patrolPlatform(cat, platform) { // cat patroling platform logic
 
     cat.setVelocityY(0);
 
+    //if the cat sprite reaches the end of the platform, change directions
     if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2)) {
         cat.body.velocity.x *= -1;
     }
 
-    if (cat.body.velocity.x > 0) {
+    if (cat.body.velocity.x > 0) { //changes cat sprite based on direction it is moving
         cat.anims.play('catRight', true);
     } else if (cat.body.velocity.x < 0) {
         cat.anims.play('catLeft', true);
