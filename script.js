@@ -55,8 +55,8 @@ document.getElementById('velocity-x').addEventListener('input', (event) => {
 });
 
 document.getElementById('velocity-x').oninput  = function(){
-    if (this.value > 1000) {
-        this.value = 1000;
+    if (this.value > 800) {
+        this.value = 800;
     }
     if (this.value < 0){
         this.value = 1;
@@ -68,8 +68,8 @@ document.getElementById('velocity-y').addEventListener('input', (event) => {
 });
  
 document.getElementById('velocity-y').oninput  = function(){
-    if (this.value > 5000) {
-        this.value = 5000;
+    if (this.value > 4000) {
+        this.value = 4000;
     }
     if (this.value < 0){
         this.value = 1;
@@ -118,7 +118,6 @@ function changeGravity(gravityvalue) {
             break;
     }
 }
-
 
 function preload() {
     this.load.image('sky', 'assets/sky.png');
