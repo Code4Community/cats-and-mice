@@ -331,9 +331,7 @@ function createLevel2() { //puts in all platforms and sprites for level 2
         j++;
     });
 
-    //cat locations
-    let xCoord = [200, 600, 800, 1000, 900, 1200];
-    let yCoord = [650, 450, 650, 650, 300, 500];
+    // Cats and properties
     cats = this.physics.add.group({
         key: 'cat',
         repeat: 5, 
