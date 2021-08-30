@@ -315,9 +315,10 @@ function createLevel2() {
     let yCoord = [650, 450, 650, 650, 300, 500];
     cats = this.physics.add.group({
         key: 'cat',
-        repeat: 5,
+        repeat: 0,
 
     });
+
     let i = 0;
     cats.children.iterate(function (child) {
 
@@ -567,7 +568,12 @@ function patrolPlatform(cat, platform) {
 
     cat.setVelocityY(0);
 
-    if (cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2) || cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2)) {
+    // console.log("velocity" + cat.body.velocity.x);
+    // console.log("cat" + cat.x);
+    // console.log("x" + platform.x);
+    // console.log("width" + platform.width);
+
+    if ((cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2) + 110)  || (cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2) - 110)) {
         cat.body.velocity.x *= -1;
     }
 
