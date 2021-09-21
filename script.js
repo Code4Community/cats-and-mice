@@ -284,6 +284,7 @@ function createLevel2() {
     ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
+ 
     platforms.create(600, 600, 'ground').setScale(.5, 7).refreshBody(); //middle block
     platforms.create(950, 350, 'ground').setScale(.60, 1).refreshBody(); //Sky platform
     platforms.create(125, 700, 'ground').setScale(.05, 5).refreshBody(); //Left wall
@@ -345,14 +346,23 @@ function createLevel3() {
     this.physics.world.setBounds(0, 0, sky.displayWidth, sky.displayHeight, true, true, true, true);
 
     // Platforms
-    ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
     platforms = this.physics.add.staticGroup();
+    ground = this.add.tileSprite(0, 700, 4000, 50, "ground");
     platforms.add(ground);
-    platforms.create(200, 700, 'ground').setScale(.3, 5).refreshBody(); //Left wall
-    platforms.create(800, 700, 'ground').setScale(.3, 5).refreshBody(); //Right wall
-    platforms.create(400, 300, 'ground').setScale(.4, 3).refreshBody(); //sky block
+
+    let skyBlock1 = this.add.tileSprite(400, 300, 200, 96, "ground");
+    platforms.add(skyBlock1);
+
+    let leftWall = this.add.tileSprite(200, 600, 150, 80, "ground");
+    platforms.add(leftWall);
+
+    let rightWall = this.add.tileSprite(800, 600, 150, 80, "ground");
+    platforms.add(rightWall);
+
+    let skyBlock2 = this.add.tileSprite(900, 200, 200, 96, "ground");
+    platforms.add(skyBlock2); 
+
     platforms.create(330, 150, 'ground').setScale(.05, 11).refreshBody(); //sky block hang thing
-    platforms.create(900, 200, 'ground').setScale(.4, 3).refreshBody(); //sky block
     platforms.create(830, 100, 'ground').setScale(.05, 8).refreshBody(); //sky block right hang thing
     // Set top of world platform 
     platforms.create(600, -63, 'ground').setScale(4).refreshBody();
@@ -386,10 +396,10 @@ function createLevel3() {
     // Cats and properties
     cats = this.physics.add.group({
         key: 'cat',
-        repeat: 4, // something fishy going on here, 5 pairs of coordinates but repeat set to 4?
+        repeat: 5, // something fishy going on here, 5 pairs of coordinates but repeat set to 4?
     });
-    let xCoord = [200, 800, 900, 1280, 400];
-    let yCoord = [600, 550, 100, 650, 200];
+    let xCoord = [200, 800, 900, 400, 1200, 500];
+    let yCoord = [500, 500, 100, 200, 200, 600];
     var i = 0;
     cats.children.iterate(function (child) {
         child.setBounce(1);
@@ -415,21 +425,28 @@ function createLevel4() {
     platforms = this.physics.add.staticGroup();
     platforms.add(ground);
 
-    platforms.create(0, 100, 'ground');
-    platforms.create(400, 130, 'ground');
-    platforms.create(800, 160, 'ground');
+    // row 1 platforms
+    platForm11 = this.add.tileSprite(0, 100, 360, 16, "ground");
+    platForm12 = this.add.tileSprite(420, 130, 400, 16, "ground");
+    platForm13 = this.add.tileSprite(860, 160, 400, 16, "ground");
+    // row 2 platforms
+    platForm21 = this.add.tileSprite(1300, 280, 360, 16, "ground");
+    platForm22 = this.add.tileSprite(880, 310, 400, 16, "ground");
+    platForm23 = this.add.tileSprite(440, 340, 400, 16, "ground");
+    //row 3 platforms
+    platForm31 = this.add.tileSprite(0, 460, 360, 16, "ground");
+    platForm32 = this.add.tileSprite(425, 500, 400, 16, "ground");
+    platForm33 = this.add.tileSprite(840, 550, 400, 16, "ground");
 
-    platforms.create(1280, 280, 'ground');
-    platforms.create(880, 310, 'ground');
-    platforms.create(480, 340, 'ground');
-
-    platforms.create(0, 460, 'ground');
-    platforms.create(400, 490, 'ground');
-    platforms.create(800, 520, 'ground');
-
-    platforms.create(1280, 675, 'ground').setScale(1, 3).refreshBody();
-    platforms.create(880, 685, 'ground').setScale(1, 2).refreshBody();
-
+    platforms.add(platForm11);
+    platforms.add(platForm12);
+    platforms.add(platForm13);
+    platforms.add(platForm21);
+    platforms.add(platForm22);
+    platforms.add(platForm23);
+    platforms.add(platForm31);
+    platforms.add(platForm32);
+    platforms.add(platForm33);
     // Set top of world platform
     platforms.create(600, -63, 'ground').setScale(4).refreshBody();
 
@@ -564,12 +581,14 @@ function patrolPlatform(cat, platform) {
 
     cat.setVelocityY(0);
 
-    // console.log("velocity" + cat.body.velocity.x);
-    // console.log("cat" + cat.x);
-    // console.log("x" + platform.x);
-    // console.log("width" + platform.width);
+    // console.log("velocity " + cat.body.velocity.x);
+    // console.log("cat " + cat.x);
+    // console.log("x " + platform.x);
+    // console.log("width " + platform.width);
 
-    if ((cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2) + 110)  || (cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2) - 110)) {
+    let buffer = 110;
+
+    if ((cat.body.velocity.x < 0 && cat.x < platform.x - (platform.width / 2))  || (cat.body.velocity.x > 0 && cat.x > platform.x + (platform.width / 2))) {
         cat.body.velocity.x *= -1;
     }
 
