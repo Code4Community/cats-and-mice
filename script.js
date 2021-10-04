@@ -47,6 +47,7 @@ document.getElementById("respawn").addEventListener("click", (event) => {
 document.getElementById("nextLevel").addEventListener("click", (event) => {
   let currentLevel = document.getElementById("level-select").value;
   currentLevel = parseInt(currentLevel);
+  document.getElementById("level-select").value = currentLevel + 1;
   switchLevel("" + (currentLevel + 1));
 });
 //user inputed speed, jump, and gravity values from text box
