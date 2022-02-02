@@ -26,3 +26,6 @@ Numbers will use [text inputs](https://developer.mozilla.org/en-US/docs/Web/HTML
 
 ### Strings
 Strings will use [text inputs](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input) with their `type` attributes set to `text`.
+
+## Contribution Policy
+This project is open to outside contributions.
