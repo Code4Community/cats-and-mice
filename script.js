@@ -2,6 +2,7 @@ var player;
 var cheeses;
 var cats;
 var platforms;
+var wall;
 var cursors;
 var score = 0;
 var gameOver = false;
@@ -36,8 +37,7 @@ var game = new Phaser.Game(config);
 // Level selection dropdown
 document.getElementById('level-select').addEventListener('change', (event) => {
     switchLevel(event.target.value);
-})
-
+});
 // Respawn button
 document.getElementById('respawn').addEventListener('click', (event) => {
     let currentLevel = document.getElementById('level-select').value;
@@ -120,12 +120,12 @@ function changeGravity(gravityvalue){
     }
 }
 
-
 //loads in visuals
 function preload() {
     this.load.image('sky', 'assets/sky.png');
     this.load.image('ground', 'assets/platform.png');
     this.load.image('cheese', 'assets/cheese.png');
+    this.load.image('wall', 'assets/cheese.png');
     this.load.spritesheet('mouse', 'assets/mouse.png', { frameWidth: 41.5, frameHeight: 24 });
     this.load.image('particle', 'assets/cheese_crumb.png');
     this.load.spritesheet('cat', 'assets/cat.png', { frameWidth: 47.9, frameHeight: 39 });
@@ -198,7 +198,6 @@ function createAnimations(realThis) {
     cursors = realThis.input.keyboard.createCursorKeys();
 }
 
-
 function createScoreAndCollisions(realThis) {
     scoreText = realThis.add.text(16, 16, 'Cheese: 0', { fontSize: '32px', fill: '#FFF' });
     scoreText.setScrollFactor(0);
@@ -206,10 +205,12 @@ function createScoreAndCollisions(realThis) {
     // Player and cheese both collide with platforms
     realThis.physics.add.collider(player, platforms);
     realThis.physics.add.collider(cheeses, platforms);
+    
 
     // Cats collide with platforms and the Fplayer
     realThis.physics.add.collider(cats, platforms, patrolPlatform, null, realThis);
     realThis.physics.add.collider(player, cats, hitCat, null, realThis);
+    //realThis.physics.add.collider(cats, wall, patrolPlatform, null, realThis);
 
     // Player collects cheese
     realThis.physics.add.overlap(player, cheeses, collectCheese, null, realThis);
@@ -234,9 +235,7 @@ function createLevel1() { //puts in all platforms and sprites for level 1
     // Set top of world platform 
     platforms.create(600, -63, 'ground').setScale(4).refreshBody();
 
-
-     //Set top of world platform 
-     platforms.create(600,-63,'ground').setScale(4).refreshBody();
+    wall.create(400, 400, 'wall');
 
     //The player and its settings
     player = this.physics.add.sprite(100, 450, 'mouse').setSize(20, 18); //puts the mouse in the game
